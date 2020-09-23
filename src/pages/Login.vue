@@ -65,6 +65,7 @@ export default {
       valid: true,
       invalidpass: false,
       ok: true,
+      tent: 0,
       loginForm: {
         username: "",
         password: "",
