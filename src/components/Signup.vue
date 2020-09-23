@@ -4,7 +4,7 @@
       <v-row align="center" justify="center">
         <v-col md="4" size>
           <v-card class="elevation-8">
-            <v-toolbar color="primary" dark flat  height="100">
+            <v-toolbar color="primary" dark flat height="100">
               <v-toolbar-title>iValet - Cadastro</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
@@ -19,7 +19,9 @@
 
                 <v-text-field
                   v-model="usrForm.email"
-                  :rules="[v => /.+@.+\..+/.test(v) || 'Digite um e-mail válido']"
+                  :rules="[
+                    (v) => /.+@.+\..+/.test(v) || 'Digite um e-mail válido',
+                  ]"
                   label="E-mail"
                   type="email"
                   required
@@ -35,7 +37,10 @@
 
                 <v-text-field
                   v-model="usrForm.password"
-                  :rules="[(v) => !!v || 'Digite uma senha', v => v.length >= 6 || 'Mínimo 6 dígitos']"
+                  :rules="[
+                    (v) => !!v || 'Digite uma senha',
+                    (v) => v.length >= 6 || 'Mínimo 6 dígitos',
+                  ]"
                   label="Senha"
                   type="password"
                   required
@@ -43,7 +48,10 @@
 
                 <v-text-field
                   v-model="usrForm.rpassword"
-                  :rules="[(usrForm.password === usrForm.rpassword) || 'Digite a senha corretamente']"
+                  :rules="[
+                    usrForm.password === usrForm.rpassword ||
+                      'Digite a senha corretamente',
+                  ]"
                   label="Confirme a senha"
                   type="password"
                   required
@@ -51,7 +59,9 @@
               </v-form>
             </v-card-text>
             <v-spacer></v-spacer>
-            <v-btn :disabled="!valid" color="primary" @click="createUser">Cadastrar</v-btn>
+            <v-btn :disabled="!valid" color="primary" @click="createUser"
+              >Cadastrar</v-btn
+            >
 
             <v-card-text />
           </v-card>
@@ -94,12 +104,14 @@ export default {
         await axios.post("user", {
           name: this.usrForm.name,
           password: this.usrForm.password,
-          email: this.usrForm.email,
-          company: [{
-            name: this.usrForm.company
-          }]
-        }).then(res => {
+          email: this.usrForm.email
+        }).then(async res => {
+            await axios.post("company", {
+              name: this.usrForm.company,
+              user: res.data.raw.insertId
+            })
           console.log(res);
+    
         })
       }
     },
