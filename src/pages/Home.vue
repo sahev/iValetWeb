@@ -1,3 +1,3 @@
 <template>
-    <h2>CADASTRO</h2>
+    <h3>HOME</h3>
 </template>
