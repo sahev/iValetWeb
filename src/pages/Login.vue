@@ -36,7 +36,7 @@
             </v-container>
             <v-btn color="primary" @click="login" :disabled="!valid">Login</v-btn>
             <v-card-text>
-              <a href="#/forgot">Esqueci a senha</a>
+              <router-link to="forgot">Esqueci a senha</router-link>
             </v-card-text>
             <v-card-text>
               Não possui login?
@@ -65,7 +65,6 @@ export default {
         username: "",
         password: "",
       },
-      passRules: [(v) => !!v || "Digite uma senha"],
     };
   },
   watch: {},
