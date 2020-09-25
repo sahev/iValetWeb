@@ -41,7 +41,7 @@
                   v-model="usrForm.password"
                   :rules="[
                     (v) => !!v || 'Digite uma senha',
-                    (v) => v.length >= 6 || 'Mínimo 6 dígitos',
+                    (v) => v.length >= 6 ||  'Min 6 caracteres'
                   ]"
                   label="Senha"
                   type="password"
@@ -52,7 +52,7 @@
                   v-model="usrForm.rpassword"
                   :rules="[
                     usrForm.password === usrForm.rpassword || 'Digite a senha corretamente',
-                    value => (value && value.length >= 3) || 'Min 6 caracteres'
+                    (v) => v.length >= 6 || 'Min 6 caracteres'
                   ]"
                   label="Confirme a senha"
                   type="password"
