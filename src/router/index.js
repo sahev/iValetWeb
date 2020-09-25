@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../pages/Login'
 import Signup from '../components/Signup'
+import Forgot from '../pages/Forgot'
 import Home from '../pages/Home'
 import alerts from '../components/alerts'
 
@@ -20,6 +21,11 @@ const router = new VueRouter({
       name: 'signup',
       component: Signup
     },
+    {
+      path: '/forgot',
+      name: 'forgot',
+      component: Forgot
+    },    
     {
       path: '/home',
       name: 'home',
