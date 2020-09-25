@@ -20,26 +20,21 @@
 
                   <v-text-field
                     v-model="loginForm.password"
-                    :rules="[(v) => !!v || 'Digite uma senha', ok ? ok : 'Credenciais inválidas']" 
+                    :rules="[(v) => !!v || 'Digite uma senha', ok ? ok : 'Login e/ou senha inválidos', value => (value && value.length >= 6) || 'Min 6 caracteres']" 
                     label="Senha"
                     type="password"
                     @keypress.enter="login"
+                    @keyup="ok = true"
                     required
                   ></v-text-field>
-                  <!-- <v-alert
-                    :value="invalidpass"
-                    color="pink"
-                    dark
-                    border="top"
-                    icon="mdi-cancel"
-                    transition="scale-transition"
-                  >Credenciais inválidas</v-alert> -->
+
+                  
+
+
                 </v-form>
               </v-card-text>
             </v-container>
-
-            <v-btn :disabled="!valid" color="primary" @click="login">Login</v-btn>
-
+            <v-btn color="primary" @click="login" :disabled="!valid">Login</v-btn>
             <v-card-text>
               <a href="#/forgot">Esqueci a senha</a>
             </v-card-text>
@@ -82,19 +77,19 @@ export default {
       ) {
         this.$refs.form.validate();
       } else {
-        try {
+
           await axios.post("auth", this.loginForm).then((res) => {
             this.ok = true
             localStorage.setItem("token", res.data.access_token);
             router.push("home").catch((err) => {
               console.log(err);
             });
-          });
-        } catch {
+          }).catch (() => {
           this.ok = false
           localStorage.removeItem("token");
-          this.invalidpass = true;
-        }
+          this.invalidpass = true;            
+          });
+
       }
     },
   },
