@@ -21,9 +21,11 @@
                   v-model="usrForm.email"
                   :rules="[
                     (v) => /.+@.+\..+/.test(v) || 'Digite um e-mail válido',
+                    ok ? ok : 'E-mail já cadastrado',
                   ]"
                   label="E-mail"
                   type="email"
+                  @keyup="valid = true"
                   required
                 ></v-text-field>
 
@@ -39,7 +41,7 @@
                   v-model="usrForm.password"
                   :rules="[
                     (v) => !!v || 'Digite uma senha',
-                    (v) => v.length >= 6 || 'Mínimo 6 dígitos',
+                    (v) => v.length >= 6 ||  'Min 6 caracteres'
                   ]"
                   label="Senha"
                   type="password"
@@ -49,8 +51,8 @@
                 <v-text-field
                   v-model="usrForm.rpassword"
                   :rules="[
-                    usrForm.password === usrForm.rpassword ||
-                      'Digite a senha corretamente',
+                    usrForm.password === usrForm.rpassword || 'Digite a senha corretamente',
+                    (v) => v.length >= 6 || 'Min 6 caracteres'
                   ]"
                   label="Confirme a senha"
                   type="password"
@@ -59,12 +61,12 @@
               </v-form>
             </v-card-text>
             <v-spacer></v-spacer>
-            <v-btn :disabled="!valid" color="primary" @click="createUser"
-              >Cadastrar</v-btn
-            >
+            <v-btn :disabled="!valid" color="primary" @click="createUser">Cadastrar</v-btn>
 
             <v-card-text />
           </v-card>
+
+          <alerts :alert="alert" />
         </v-col>
       </v-row>
     </v-container>
@@ -72,13 +74,27 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
+import router from "../router";
+import alerts from "./alerts";
 
 export default {
   name: "Signup",
+  components: {
+    alerts,
+  },
   data() {
     return {
+      alert: {
+        active: null,
+        color: null,
+        text: null,
+        timeout: null,
+        x: null,
+        y: null,
+      },
       valid: true,
+      ok: true,
       usrForm: {
         name: "",
         email: "",
@@ -101,18 +117,32 @@ export default {
       ) {
         this.$refs.form.validate();
       } else {
-        await axios.post("user", {
-          name: this.usrForm.name,
-          password: this.usrForm.password,
-          email: this.usrForm.email
-        }).then(async res => {
+        await axios
+          .post("user", {
+            name: this.usrForm.name,
+            password: this.usrForm.password,
+            email: this.usrForm.email,
+          })
+          .then(async (res) => {
             await axios.post("company", {
               name: this.usrForm.company,
-              user: res.data.raw.insertId
-            })
-          console.log(res);
-    
-        })
+              user: res.data.raw.insertId,
+            });
+
+            setTimeout(() => {
+              router.push("/");
+            }, 4000);
+            this.ok = true;
+            this.alert = {
+              active: true,
+              color: "success",
+              text: "Redirecionando para a tela de login...",
+              top: "top"
+            };
+          })
+          .catch(() => {
+            this.ok = false;
+          });
       }
     },
   },

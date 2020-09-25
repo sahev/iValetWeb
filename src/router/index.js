@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '../pages/Login'
 import Signup from '../components/Signup'
 import Home from '../pages/Home'
+import alerts from '../components/alerts'
+
 
 Vue.use(VueRouter)
 
@@ -25,7 +27,15 @@ const router = new VueRouter({
       meta: {
         requiresAuth: true
       }
-    }    
+    },
+    {
+      path: '/alerts',
+      name: 'alerts',
+      component: alerts,
+      meta: {
+        requiresAuth: false
+      }
+    }         
   ]
 })
 
