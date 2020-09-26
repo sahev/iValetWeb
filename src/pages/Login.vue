@@ -20,16 +20,17 @@
 
                   <v-text-field
                     v-model="loginForm.password"
-                    :rules="[(v) => !!v || 'Digite uma senha', ok ? ok : 'Login e/ou senha inválidos', value => (value && value.length >= 6) || 'Min 6 caracteres']" 
+                    :rules="[
+                      (v) => !!v || 'Digite uma senha',
+                      ok ? ok : 'Login e/ou senha inválidos',
+                      value => (value && value.length >= 6) || 'Min 6 caracteres'
+                    ]"
                     label="Senha"
                     type="password"
                     @keypress.enter="login"
                     @keyup="ok = true"
                     required
                   ></v-text-field>
-
-                  
-
 
                 </v-form>
               </v-card-text>
@@ -50,11 +51,10 @@
 </template>
 
 <script>
-import axios from "axios";
-import router from "../router";
+import axios from 'axios';
 
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
       valid: true,
@@ -62,8 +62,8 @@ export default {
       ok: true,
       tent: 0,
       loginForm: {
-        username: "",
-        password: "",
+        username: '',
+        password: '',
       },
     };
   },
@@ -71,24 +71,20 @@ export default {
   methods: {
     async login() {
       if (
-        this.loginForm.username.length == 0 ||
-        this.loginForm.password.length == 0
+        this.loginForm.username.length === 0
+        || this.loginForm.password.length === 0
       ) {
         this.$refs.form.validate();
       } else {
-
-          await axios.post("auth", this.loginForm).then((res) => {
-            this.ok = true
-            localStorage.setItem("token", res.data.access_token);
-            router.push("home").catch((err) => {
-              console.log(err);
-            });
-          }).catch (() => {
-          this.ok = false
-          localStorage.removeItem("token");
-          this.invalidpass = true;            
-          });
-
+        await axios.post('auth', this.loginForm).then((res) => {
+          this.ok = true;
+          localStorage.setItem('token', res.data.access_token);
+          this.$router.push('home');
+        }).catch(() => {
+          this.ok = false;
+          localStorage.removeItem('token');
+          this.invalidpass = true;
+        });
       }
     },
   },

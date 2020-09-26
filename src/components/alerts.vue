@@ -9,13 +9,13 @@
       :top="alert.top === 'top'"
       :vertical="alert.mode === 'vertical'"
     >
-     {{ alert.text }}
+      {{ alert.text }}
     </v-snackbar>
   </div>
 </template>
 <script>
 export default {
-  name: "alerts",
+  name: 'alerts',
   props: {
     alert: {
       active: Boolean,
@@ -24,7 +24,7 @@ export default {
       timeout: Number,
       x: String,
       top: String,
-      mode: String
+      mode: String,
     },
   },
 

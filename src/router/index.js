@@ -1,63 +1,62 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Login from '../pages/Login'
-import Signup from '../components/Signup'
-import Forgot from '../pages/Forgot'
-import Home from '../pages/Home'
-import alerts from '../components/alerts'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Login from '../pages/Login.vue';
+import Signup from '../components/Signup.vue';
+import Forgot from '../pages/Forgot.vue';
+import Home from '../pages/Home.vue';
 
+Vue.use(VueRouter);
 
-Vue.use(VueRouter)
+// function isLogged() {
+//   const token = localStorage.getItem('token');
+
+//   if (token) {
+//     return true;
+//   }
+//   return false;
+// }
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'login',
-      component: Login
+      component: Login,
     },
     {
       path: '/signup',
       name: 'signup',
-      component: Signup
+      component: Signup,
     },
     {
       path: '/forgot',
       name: 'forgot',
-      component: Forgot
-    },    
+      component: Forgot,
+    },
     {
       path: '/home',
       name: 'home',
       component: Home,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
-    {
-      path: '/alerts',
-      name: 'alerts',
-      component: alerts,
-      meta: {
-        requiresAuth: false
-      }
-    }         
-  ]
-})
+  ],
+});
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (localStorage.getItem('token') === null) {
       next({
-        path: '/'
-      })
+        path: '/',
+      });
     } else {
       next();
     }
   } else {
     next();
   }
-})
+});
 
-
-export default router
+export default router;
