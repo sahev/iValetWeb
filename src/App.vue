@@ -30,10 +30,10 @@
 
 .fade-leave-to {
   opacity: 0;
- 
+
 }
 
 .fade-leave-active {
   transition: all 0.1s ease;
-} 
+}
 </style>

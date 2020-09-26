@@ -74,12 +74,11 @@
 </template>
 
 <script>
-import axios from "axios";
-import router from "../router";
-import alerts from "./alerts";
+import axios from 'axios';
+import alerts from './alerts.vue';
 
 export default {
-  name: "Signup",
+  name: 'Signup',
   components: {
     alerts,
   },
@@ -96,11 +95,11 @@ export default {
       valid: true,
       ok: true,
       usrForm: {
-        name: "",
-        email: "",
-        company: "",
-        password: "",
-        rpassword: "",
+        name: '',
+        email: '',
+        company: '',
+        password: '',
+        rpassword: '',
       },
     };
   },
@@ -110,34 +109,34 @@ export default {
   methods: {
     async createUser() {
       if (
-        this.usrForm.name.length == 0 ||
-        this.usrForm.email.length == 0 ||
-        this.usrForm.company.length == 0 ||
-        this.usrForm.password.length == 0
+        this.usrForm.name.length === 0
+        || this.usrForm.email.length === 0
+        || this.usrForm.company.length === 0
+        || this.usrForm.password.length === 0
       ) {
         this.$refs.form.validate();
       } else {
         await axios
-          .post("user", {
+          .post('user', {
             name: this.usrForm.name,
             password: this.usrForm.password,
             email: this.usrForm.email,
           })
           .then(async (res) => {
-            await axios.post("company", {
+            await axios.post('company', {
               name: this.usrForm.company,
               user: res.data.raw.insertId,
             });
 
             setTimeout(() => {
-              router.push("/");
+              this.$router.push('/');
             }, 4000);
             this.ok = true;
             this.alert = {
               active: true,
-              color: "success",
-              text: "Redirecionando para a tela de login...",
-              top: "top"
+              color: 'success',
+              text: 'Redirecionando para a tela de login...',
+              top: 'top',
             };
           })
           .catch(() => {
