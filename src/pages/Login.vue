@@ -12,6 +12,7 @@
                 <v-form v-model="valid" ref="form" lazy-validation>
                   <v-text-field
                     v-model="loginForm.username"
+                    @keyup="ok = true"
                     :rules="[v => /.+@.+\..+/.test(v) || 'Digite um e-mail válido', ok ? ok : '']"
                     label="E-mail"
                     type="email"
