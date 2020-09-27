@@ -2,7 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '../pages/Login.vue';
 import Signup from '../components/Signup.vue';
-import Forgot from '../pages/Forgot.vue';
+import Forgot from '../pages/ForgotPass/Forgot.vue';
+import ResetPassword from '../pages/ForgotPass/ResetPassword.vue';
 import Home from '../pages/Home.vue';
 
 Vue.use(VueRouter);
@@ -33,6 +34,11 @@ const router = new VueRouter({
       path: '/forgot',
       name: 'forgot',
       component: Forgot,
+    },
+    {
+      path: '/resetpassword',
+      name: 'resetpassword',
+      component: ResetPassword,
     },
     {
       path: '/home',

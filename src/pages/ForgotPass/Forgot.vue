@@ -28,19 +28,32 @@
               >Enviar</v-btn
             >
           </v-card>
+          <alert :alert="alert" />
         </v-col>
       </v-row>
     </v-container>
   </v-app>
 </template>
 <script>
+import axios from 'axios';
+import alert from '../../components/alerts.vue';
+
 export default {
   name: 'Forgot',
+  components: {
+    alert,
+  },
   data() {
     return {
       valid: true,
       blank: true,
       email: null,
+      alert: {
+        active: false,
+        color: '',
+        text: '',
+        top: '',
+      },
     };
   },
   methods: {
@@ -49,7 +62,15 @@ export default {
         this.$refs.form.validate();
         this.blank = false;
       } else {
-        console.log('email > ', this.email);
+        axios.post('user/SendEmailForgotPassword', {
+          to: this.email,
+        });
+        this.alert = {
+          active: true,
+          color: 'success',
+          text: 'Recuperação de senha enviada',
+          top: 'top',
+        };
       }
     },
   },
