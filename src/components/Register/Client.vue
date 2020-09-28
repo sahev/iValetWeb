@@ -114,46 +114,9 @@ export default {
             name: this.usrForm.name,
             password: this.usrForm.password,
             email: this.usrForm.email,
+            perfil: 2,
           })
           .then(() => {
-            setTimeout(() => {
-              this.$router.push('/');
-            }, 4000);
-            this.ok = true;
-            this.alert = {
-              active: true,
-              color: 'success',
-              text: 'Redirecionando para a tela de login...',
-              top: 'top',
-            };
-          })
-          .catch(() => {
-            this.ok = false;
-          });
-      }
-    },
-    async createOwner() {
-      if (
-        this.usrForm.name.length === 0
-        || this.usrForm.email.length === 0
-        || this.usrForm.company.length === 0
-        || this.usrForm.password.length === 0
-        || this.usrForm.rpassword.length === 0
-      ) {
-        this.$refs.form.validate();
-      } else {
-        await axios
-          .post('user', {
-            name: this.usrForm.name,
-            password: this.usrForm.password,
-            email: this.usrForm.email,
-          })
-          .then(async (res) => {
-            await axios.post('company', {
-              name: this.usrForm.company,
-              user: res.data.raw.insertId,
-            });
-
             setTimeout(() => {
               this.$router.push('/');
             }, 4000);

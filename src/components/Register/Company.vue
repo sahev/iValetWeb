@@ -79,7 +79,7 @@ import axios from 'axios';
 import alerts from '../alerts.vue';
 
 export default {
-  name: 'Signup',
+  name: 'Company',
   components: {
     alerts,
   },
@@ -123,6 +123,7 @@ export default {
             name: this.usrForm.name,
             password: this.usrForm.password,
             email: this.usrForm.email,
+            perfil: 1,
           })
           .then(async (res) => {
             await axios.post('company', {
