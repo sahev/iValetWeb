@@ -1,9 +1,8 @@
 <template>
   <v-app id="inspire">
-    <v-container class="fill-height" fluid>
       <v-row align="center" justify="center">
-        <v-col md="4" size>
-          <v-card class="elevation-8">
+        <v-col md="4">
+          <v-card class="elevation-8" height="550">
             <v-toolbar color="primary" dark flat height="100">
               <v-toolbar-title>iValet - Cadastro</v-toolbar-title>
             </v-toolbar>
@@ -41,7 +40,7 @@
                   v-model="usrForm.password"
                   :rules="[
                     (v) => !!v || 'Digite uma senha',
-                    (v) => v.length >= 6 ||  'Min 6 caracteres'
+                    (v) => v.length >= 6 || 'Min 6 caracteres',
                   ]"
                   label="Senha"
                   type="password"
@@ -51,8 +50,9 @@
                 <v-text-field
                   v-model="usrForm.rpassword"
                   :rules="[
-                    usrForm.password === usrForm.rpassword || 'Digite a senha corretamente',
-                    (v) => v.length >= 6 || 'Min 6 caracteres'
+                    usrForm.password === usrForm.rpassword ||
+                      'Digite a senha corretamente',
+                    (v) => v.length >= 6 || 'Min 6 caracteres',
                   ]"
                   label="Confirme a senha"
                   type="password"
@@ -60,22 +60,23 @@
                 ></v-text-field>
               </v-form>
             </v-card-text>
-            <v-spacer></v-spacer>
-            <v-btn :disabled="!valid" color="primary" @click="createUser">Cadastrar</v-btn>
 
+            <v-btn :disabled="!valid" color="primary" @click="createOwner"
+              >Cadastrar</v-btn
+            >
+            <alerts :alert="alert" />
             <v-card-text />
           </v-card>
 
           <alerts :alert="alert" />
         </v-col>
       </v-row>
-    </v-container>
   </v-app>
 </template>
 
 <script>
 import axios from 'axios';
-import alerts from './alerts.vue';
+import alerts from '../alerts.vue';
 
 export default {
   name: 'Signup',
@@ -107,12 +108,13 @@ export default {
 
   watch: {},
   methods: {
-    async createUser() {
+    async createOwner() {
       if (
         this.usrForm.name.length === 0
         || this.usrForm.email.length === 0
         || this.usrForm.company.length === 0
         || this.usrForm.password.length === 0
+        || this.usrForm.rpassword.length === 0
       ) {
         this.$refs.form.validate();
       } else {
@@ -149,5 +151,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>
