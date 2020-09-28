@@ -41,18 +41,18 @@
     </v-row>
 
     <User v-show="user" />
-    <Owner v-show="owner" />
+    <Company v-show="owner" />
   </v-app>
 </template>
 
 <script>
-import Owner from '../../components/Register/Owner.vue';
-import User from '../../components/Register/User.vue';
+import Company from '../../components/Register/Company.vue';
+import User from '../../components/Register/Client.vue';
 
 export default {
   name: 'Signup',
   components: {
-    Owner,
+    Company,
     User,
   },
   data() {
