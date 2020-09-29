@@ -4,7 +4,8 @@ import Login from '../pages/Login.vue';
 import Signup from '../pages/Register/Signup.vue';
 import Forgot from '../pages/ForgotPass/Forgot.vue';
 import ResetPassword from '../pages/ForgotPass/ResetPassword.vue';
-import Home from '../pages/Home.vue';
+import Home from '../pages/Home/Home.vue';
+import Account from '../components/Account/Account.vue';
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,11 @@ const router = new VueRouter({
       path: '/',
       name: 'login',
       component: Login,
+    },
+    {
+      path: '/account',
+      name: 'account',
+      component: Account,
     },
     {
       path: '/signup',
