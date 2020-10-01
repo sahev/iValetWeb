@@ -1,25 +1,44 @@
 <template>
-  <v-app>
-    <v-row align="center" justify="center">
-      <v-col md="4">
-        <v-card class="elevation-8" height="500">
-          <v-toolbar color="primary" dark flat height="100">
-            <v-toolbar-title>Olá, {{ profile.username }}!</v-toolbar-title>
-          </v-toolbar>
-          <v-card-text>
-            <v-combobox
-              :items="companies"
-              item-text="name"
-              label="Selecione o estacionamento"
-              required
-            ></v-combobox>
-            </v-card-text>
-            <v-spacer> </v-spacer>
-          <v-btn color="primary" @click="next">Continuar</v-btn>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-app>
+  <div id="app">
+    <v-app id="inspire">
+      <v-row justify="center">
+        <v-dialog v-model="dialog" persistent max-width="600px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="primary" dark v-bind="attrs" v-on="on">
+              Open Dialog
+            </v-btn>
+          </template>
+          <v-card>
+            <v-toolbar color="primary" dark flat height="100">
+              <v-toolbar-title>Selecione o estacionamento</v-toolbar-title>
+            </v-toolbar>
+
+            <v-list flat>
+              <v-list-item-group v-model="item" color="primary">
+                <v-list-item v-for="(item, i) in items" :key="i">
+                  <v-avatar color="primary" size="43"></v-avatar>
+
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Close
+              </v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </v-app>
+  </div>
 </template>
 
 <script>
@@ -28,8 +47,19 @@ import axios from 'axios';
 
 export default {
   name: 'Companies',
+  props: {
+    on: Boolean,
+    attrs: Boolean,
+  },
   data() {
     return {
+      dialog: false,
+      item: 1,
+      items: [
+        { text: 'Real-Time', icon: 'mdi-clock' },
+        { text: 'Audience', icon: 'mdi-account' },
+        { text: 'Conversions', icon: 'mdi-flag' },
+      ],
       profile: {
         id: '',
         username: '',
@@ -66,5 +96,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
