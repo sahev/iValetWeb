@@ -49,21 +49,34 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      width="50vh"
+      content-class="rounded-xl"
+    >
+      <choose-company :companies="companies" />
+      <v-btn class="rounded-0" @click="dialog = false">fechar</v-btn>
+    </v-dialog>
   </v-app>
 </template>
 
 <script>
 import axios from 'axios';
 import decode from 'jwt-decode';
+import ChooseCompany from '../components/Account/ChooseCompany.vue';
 
 export default {
   components: {
+    ChooseCompany,
   },
   name: 'Login',
   data() {
     return {
+      dialog: false,
       valid: true,
       invalidpass: false,
+      companies: {},
       ok: true,
       token: localStorage.getItem('token'),
       loginForm: {
@@ -98,19 +111,26 @@ export default {
     async getCompanies() {
       const token = localStorage.getItem('token');
       const { id } = decode(token);
-      await axios.get(`/user/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((res) => {
-        if (res.data.company.length > 1) {
-          this.$router.push('choosecompany');
-        } else {
-          this.$router.push('home');
-        }
-      });
+      await axios
+        .get(`/user/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          if (res.data.company.length > 1) {
+            this.companies = res.data.company;
+            this.dialog = true;
+          } else {
+            this.$router.push('home');
+          }
+        });
     },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+.rounded-xl {
+  border-radius: 25px;
+}
+</style>

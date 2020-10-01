@@ -18,7 +18,8 @@ new Vue({
       themes: {
         light: {
           primary: '#832D25',
-          secondary: '#E1DBD4',
+          secondary: '#41484F',
+          tertiary: '#E1DBD4',
           error: '#FF5252',
           info: '#2196F3',
           success: '#4CAF50',
