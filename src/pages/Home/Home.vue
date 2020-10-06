@@ -1,37 +1,68 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app color="white" flat>
-      <v-tabs centered color="grey darken-1">
-        <v-tab v-for="link in links" :key="link">
-          {{ link }}
-        </v-tab>
-        <Account />
-      </v-tabs>
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>iValet</v-toolbar-title>
+
+        <v-tab disabled> {{ option }} </v-tab>
+
     </v-app-bar>
 
-    <v-main class="grey lighten-3">
-      <v-container>
-        <v-col cols="12" sm="2">
-          <v-sheet rounded="lg" min-height="268"> entrada </v-sheet>
-        </v-col>
+    <v-navigation-drawer v-model="drawer" fixed temporary>
+      <v-list>
+        <v-list-item
+          v-for="item in items"
+          :key="item.icon"
+          @click="(option = item.opt), (drawer = !drawer)"
+        >
+          <v-list-item-icon>
+            <v-icon> {{ item.icon }} </v-icon>
+          </v-list-item-icon>
 
-        <v-col cols="12" sm="2">
-          <v-sheet rounded="lg" min-height="268"> saída </v-sheet>
-        </v-col>
-      </v-container>
-    </v-main>
+          <v-list-item-content>
+            {{ item.text }}
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+    <!-- v-show home -->
+    <Home v-show="option === 'Home'" />
+    <InPage v-show="option === 'Entrada'" />
+    <OutPage v-show="option === 'Saída'" />
+    <!-- v-show in -->
+    <!-- v-show out -->
   </v-app>
 </template>
 
 <script>
-import Account from '../../components/Account/Account.vue';
+// import axios from 'axios';
+import Home from '../../components/MenuOpts/Home.vue';
+import InPage from '../../components/MenuOpts/In.vue';
+import OutPage from '../../components/MenuOpts/Out.vue';
 
 export default {
   components: {
-    Account,
+    Home,
+    InPage,
+    OutPage,
   },
-  data: () => ({
-    links: ['Dashboard', 'Profile'],
-  }),
+  data() {
+    return {
+      drawer: null,
+      option: 'Home',
+      items: [
+        { icon: 'mdi-home', text: 'Home', opt: 'Home' },
+        { icon: 'mdi-car-arrow-left', text: 'Entrada', opt: 'Entrada' },
+        { icon: 'mdi-car-arrow-right', text: 'Saída', opt: 'Saída' },
+      ],
+      //     vehicles: [],
+      //   };
+      // },
+      // methods: {
+      //   getVehicles() {
+      //     this.vehicles = axios.get('/transaction/opened/{companyId}'),
+    };
+  },
 };
 </script>
