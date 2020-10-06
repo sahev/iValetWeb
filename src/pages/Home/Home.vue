@@ -26,12 +26,14 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
     <!-- v-show home -->
     <Home v-show="option === 'Home'" />
     <InPage v-show="option === 'Entrada'" />
     <OutPage v-show="option === 'Saída'" />
     <!-- v-show in -->
     <!-- v-show out -->
+
   </v-app>
 </template>
 
@@ -50,6 +52,7 @@ export default {
   data() {
     return {
       drawer: null,
+      mini: true,
       option: 'Home',
       items: [
         { icon: 'mdi-home', text: 'Home', opt: 'Home' },

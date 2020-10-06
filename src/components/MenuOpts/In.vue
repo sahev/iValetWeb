@@ -9,6 +9,7 @@
                 <v-text-field
                   v-model="vehicles.placa"
                   label="Placa"
+                  style="text-transform: uppercase"
                   class="display-1 text--primary"
                 >
                 </v-text-field>
@@ -21,6 +22,7 @@
                   v-model="vehicles.prisma"
                   label="Prisma"
                   class="text--primary"
+                  type="number"
                 ></v-text-field>
               </v-card-text>
             </v-form>
@@ -47,7 +49,7 @@
           cols="4"
           class="justify-content"
         >
-          <v-card height="230">
+          <v-card height="250" class="justify-content">
             <v-card-text>
               <div>Placa:</div>
               <p class="display-1 text--primary">{{ vehicle.placa }}</p>
@@ -55,6 +57,7 @@
               <p></p>
               <div class="text--primary">
                 Modelo: {{ vehicle.model }}<br />
+                Prisma: {{ vehicle.prisma }}<br />
                 Tempo Total: {{ vehicle.time }} minutos
               </div>
             </v-card-text>
@@ -79,23 +82,28 @@ export default {
       vehicles: [
         {
           model: 'celta',
-          placa: 'DRU-4732',
+          placa: 'DRU4732',
           time: '130',
-          prisma: '',
+          prisma: 23,
         },
         {
           model: 'sandero',
-          placa: 'ERO-4222',
+          placa: 'ERO4222',
           time: '50',
-          prisma: '',
+          prisma: 241,
         },
       ],
     };
   },
   methods: {
     send() {
-      const { model, placa, prisma } = this.vehicles;
-      this.vehicles.push({ model, placa, prisma });
+      const { placa, model, prisma } = this.vehicles;
+      this.vehicles.push({
+        placa: placa.toString().toUpperCase(),
+        model: model.toString().toUpperCase(),
+        prisma,
+      });
+
       this.vehicles.placa = '';
       this.vehicles.model = '';
       this.vehicles.prisma = '';
