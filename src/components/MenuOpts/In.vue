@@ -7,19 +7,18 @@
             <v-form>
               <v-card-text>
                 <v-text-field
-                  v-model="vehicles.placa"
+                  v-model="newVehicle.placa"
                   label="Placa"
-                  style="text-transform: uppercase"
                   class="display-1 text--primary"
                 >
                 </v-text-field>
-                <v-text-field
-                  v-model="vehicles.model"
+                <!-- <v-text-field
+                  v-model="newVehicle.model"
                   label="Modelo"
                   class="text--primary"
-                ></v-text-field>
+                ></v-text-field> -->
                 <v-text-field
-                  v-model="vehicles.prisma"
+                  v-model="newVehicle.prisma"
                   label="Prisma"
                   class="text--primary"
                   type="number"
@@ -58,7 +57,7 @@
               <div class="text--primary">
                 Modelo: {{ vehicle.model }}<br />
                 Prisma: {{ vehicle.prisma }}<br />
-                Tempo Total: {{ vehicle.time }} minutos
+                Tempo Total: {{ datediff(vehicle.startDate) }} minutos
               </div>
             </v-card-text>
 
@@ -76,37 +75,59 @@
 </template>
 
 <script>
+import * as io from 'socket.io-client';
+import axios from 'axios';
+import dayjs from 'dayjs';
+
+const token = localStorage.getItem('token');
+// eslint-disable-next-line radix
+const companyId = parseInt(localStorage.getItem('company'));
+
 export default {
+  async created() {
+    await this.getOpeneds();
+    const socket = io.connect('http://ragazzitech.caioragazzi.com:81/', {
+      query: { token },
+    });
+
+    socket.on('openedTransactions:company:108', (res) => {
+      this.vehicles = res;
+    });
+  },
   data() {
     return {
-      vehicles: [
-        {
-          model: 'celta',
-          placa: 'DRU4732',
-          time: '130',
-          prisma: 23,
-        },
-        {
-          model: 'sandero',
-          placa: 'ERO4222',
-          time: '50',
-          prisma: 241,
-        },
-      ],
+      newVehicle: [],
+      vehicles: [],
     };
   },
   methods: {
-    send() {
-      const { placa, model, prisma } = this.vehicles;
-      this.vehicles.push({
-        placa: placa.toString().toUpperCase(),
-        model: model.toString().toUpperCase(),
-        prisma,
-      });
-
-      this.vehicles.placa = '';
-      this.vehicles.model = '';
-      this.vehicles.prisma = '';
+    async getOpeneds() {
+      await axios
+        .get(`transaction/opened/${companyId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          this.vehicles = res.data;
+        });
+    },
+    datediff(date) {
+      const now = dayjs(Date.now());
+      return now.diff(date, 'minute');
+    },
+    async send() {
+      const { placa } = this.newVehicle;
+      await axios.post(
+        'transaction',
+        {
+          placa: placa.toString().toUpperCase(),
+          companyId,
+          prismaNumber: this.newVehicle.prisma,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      this.newVehicle = '';
     },
   },
 };
