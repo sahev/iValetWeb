@@ -48,7 +48,7 @@ export default {
     },
     next(id) {
       localStorage.setItem('company', id);
-      this.$router.push('home');
+      window.location.replace('home');
     },
   },
 };
