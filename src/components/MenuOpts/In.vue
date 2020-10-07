@@ -90,7 +90,7 @@ export default {
       query: { token },
     });
 
-    socket.on('openedTransactions:company:108', (res) => {
+    socket.on(`openedTransactions:company:${companyId}`, (res) => {
       this.vehicles = res;
     });
   },
