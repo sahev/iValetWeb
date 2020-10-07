@@ -9,7 +9,7 @@
         :key="company.id"
         color="primary"
       >
-        <v-list-item @click="next">
+        <v-list-item @click="next(company.id)">
           <v-avatar color="secondary" size="43">
             <span class="white--text">
               {{ getInitials(company.name) }}
@@ -46,7 +46,8 @@ export default {
       }
       return (firstname + lastname).toUpperCase();
     },
-    next() {
+    next(id) {
+      localStorage.setItem('company', id);
       this.$router.push('home');
     },
   },
