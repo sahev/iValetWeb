@@ -2,8 +2,10 @@ import 'vuetify/dist/vuetify.min.css';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import axios from 'axios';
+import { Store } from 'vuex';
 import App from './App.vue';
 import router from './router';
+import store from './stores/socket';
 
 axios.defaults.baseURL = 'http://ragazzitech.caioragazzi.com:81/';
 Vue.config.productionTip = false;
@@ -29,5 +31,7 @@ new Vue({
     },
   }),
   router,
+  Store,
+  store,
   render: (h) => h(App),
 }).$mount('#app');

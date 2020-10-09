@@ -39,11 +39,10 @@
           </v-card>
         </v-col>
       </v-row>
-
       <v-divider />
       <v-row>
         <v-col
-          v-for="vehicle in vehicles"
+          v-for="vehicle in openedTransactions"
           :key="vehicle.placa"
           cols="4"
           class="justify-content"
@@ -63,10 +62,57 @@
 
             <v-card-actions>
               <v-spacer />
-              <v-btn text color="deep-purple accent-4" class="ml-auto">
+              <v-btn @click="checkout(vehicle.id)"
+              text color="deep-purple accent-4" class="ml-auto">
                 Saída
               </v-btn>
             </v-card-actions>
+
+  <v-row justify="center">
+    <v-btn
+      color="primary"
+      dark
+      @click.stop="dialog = true"
+    >
+      Open Dialog
+    </v-btn>
+
+    <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Use Google's location service?
+        </v-card-title>
+
+        <v-card-text>
+          Let Google help apps determine location. This means sen
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Disagree
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
+
           </v-card>
         </v-col>
       </v-row>
@@ -75,41 +121,38 @@
 </template>
 
 <script>
-import * as io from 'socket.io-client';
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { mapState, mapMutations, mapActions } from 'vuex';
 
 const token = localStorage.getItem('token');
 // eslint-disable-next-line radix
 const companyId = parseInt(localStorage.getItem('company'));
 
 export default {
-  async created() {
-    await this.getOpeneds();
-    const socket = io.connect('http://ragazzitech.caioragazzi.com:81/', {
-      query: { token },
-    });
-
-    socket.on(`openedTransactions:company:${companyId}`, (res) => {
-      this.vehicles = res;
-    });
+  created() {
+    this.getOpeneds();
+    this.getVehicles();
+  },
+  computed: {
+    ...mapState({
+      openedTransactions: (a) => a.openedTransactions,
+      finishedTransactions: (a) => a.finishedTransactions,
+    }),
   },
   data() {
     return {
+      dialog: false,
       newVehicle: [],
-      vehicles: [],
     };
   },
   methods: {
-    async getOpeneds() {
-      await axios
-        .get(`transaction/opened/${companyId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          this.vehicles = res.data;
-        });
-    },
+    ...mapActions([
+      'getOpeneds',
+    ]),
+    ...mapMutations([
+      'getVehicles',
+    ]),
     datediff(date) {
       const now = dayjs(Date.now());
       return now.diff(date, 'minute');
@@ -127,7 +170,14 @@ export default {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      this.newVehicle = '';
+      this.newVehicle = {};
+    },
+    async checkout(transactionId) {
+      await axios.put('transaction/finish', null,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          params: { transactionId, companyId },
+        }).then((res) => { console.log(res, transactionId); });
     },
   },
 };
