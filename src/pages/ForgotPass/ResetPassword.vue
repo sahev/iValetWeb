@@ -44,7 +44,7 @@
 
 <script>
 import axios from 'axios';
-import alert from '../../components/alerts.vue';
+import alert from '../../components/Alerts/alerts.vue';
 
 export default {
   name: 'ResetPassword',

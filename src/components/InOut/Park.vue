@@ -1,9 +1,9 @@
 <template>
   <v-main class="grey lighten-2">
     <v-container>
-      <v-row>
+      <!-- <v-row>
         <v-col cols="4" class="justify-content">
-          <v-card height="300">
+          <v-card height="230">
             <v-form>
               <v-card-text>
                 <v-text-field
@@ -34,7 +34,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-divider />
+      <v-divider /> -->
       <v-row>
         <v-col
           v-for="vehicle in openedTransactions"
