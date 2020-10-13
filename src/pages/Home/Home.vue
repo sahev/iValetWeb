@@ -39,7 +39,7 @@
 
     <!-- v-show home -->
     <Home v-show="option === 'Home'" />
-    <InPage v-show="option === 'Entrada'" />
+    <ParkPage v-show="option === 'Pátio'" />
     <OutPage v-show="option === 'Saída'" />
     <!-- v-show in -->
     <!-- v-show out -->
@@ -49,14 +49,14 @@
 
 <script>
 // import axios from 'axios';
-import Home from '../../components/MenuOpts/Home.vue';
-import InPage from '../../components/MenuOpts/In.vue';
-import OutPage from '../../components/MenuOpts/Out.vue';
+import Home from '../../components/InOut/Home.vue';
+import ParkPage from '../../components/InOut/Park.vue';
+import OutPage from '../../components/InOut/Out.vue';
 
 export default {
   components: {
     Home,
-    InPage,
+    ParkPage,
     OutPage,
   },
   data() {
@@ -66,7 +66,7 @@ export default {
       option: 'Home',
       items: [
         { icon: 'mdi-home', text: 'Home', opt: 'Home' },
-        { icon: 'mdi-car-arrow-left', text: 'Entrada', opt: 'Entrada' },
+        { icon: 'mdi-car-arrow-left', text: 'Pátio', opt: 'Pátio' },
         { icon: 'mdi-car-arrow-right', text: 'Saída', opt: 'Saída' },
       ],
       //     vehicles: [],

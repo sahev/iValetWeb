@@ -68,7 +68,7 @@
 
 <script>
 import axios from 'axios';
-import alerts from '../alerts.vue';
+import alerts from '../Alerts/alerts.vue';
 
 export default {
   name: 'Signup',
