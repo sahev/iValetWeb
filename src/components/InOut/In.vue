@@ -3,7 +3,7 @@
   <v-main class="grey lighten-2">
     <v-row>
       <v-col cols="4" class="justify-content">
-        <v-card height="230">
+        <v-card>
           <v-form>
             <v-card-text>
               <v-text-field
@@ -51,16 +51,12 @@ export default {
 
   },
   created() {
-    this.getOpeneds();
-    this.getVehicles();
   },
   computed: {
 
   },
   data() {
     return {
-      model: false,
-      cVehicle: [],
       newVehicle: [],
     };
   },

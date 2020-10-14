@@ -42,7 +42,7 @@
           cols="4"
           class="justify-content"
         >
-          <v-card height="250" class="justify-content">
+          <v-card class="justify-content">
             <v-card-text>
               <div>Placa:</div>
               <p class="display-1 text--primary">{{ vehicle.placa }}</p>
