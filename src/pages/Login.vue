@@ -117,9 +117,15 @@ export default {
         })
         .then((res) => {
           if (res.data.company.length > 1) {
+            console.log('DONO');
             this.companies = res.data.company;
             this.dialog = true;
+          } else if (res.data.perfil.id === 1) {
+            localStorage.setItem('company', res.data.company[0].id);
+            console.log('FUNCIONARIO');
+            this.$router.push('home');
           } else {
+            console.log('CLIENTE');
             this.$router.push('home');
           }
         });
