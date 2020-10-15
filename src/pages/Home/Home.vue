@@ -4,100 +4,119 @@
       <v-sheet color="grey lighten-4" class="pa-4">
         <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
 
-        <div>john@vuetifyjs.com</div>
+        <div class="text--primary">samuel evangelista</div>
+        <div class="text--primary">company xxx</div>
       </v-sheet>
 
       <v-divider></v-divider>
 
       <v-list>
-        <v-list-item v-for="item in items" :key="item.text" @click="(option = item.opt)">
+        <v-list-item
+          v-for="item in items"
+          :key="item.text"
+          @click="option = item.opt"
+        >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
+            <v-list-item-title class="d-flex">{{
+              item.text
+            }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item @click="logout">
+          <v-list-item-icon>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title class="d-flex"> Sair </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <v-main>
-
-      <v-container class="py-8 px-6" fluid>
-        <v-row>
-           <v-col cols="12">
-             <InPage v-show="option === 'Home'" />
-                    <ParkPage v-show="option === 'Pátio'" />
-                    <OutPage v-show="option === 'Saída'" />
-            <!--<v-card>
-              <v-subheader>{{ card }}</v-subheader>
-
-              <v-list two-line>
-                <template v-for="n in 6">
-                  <v-list-item :key="n">
-
-                  </v-list-item>
-                   <v-divider
-                    v-if="n !== 6"
-                    :key="`divider-${n}`"
-                    inset
-                  ></v-divider>
-                </template>
-              </v-list>
-            </v-card>-->
+      <v-app-bar color="deep-purple" dark
+            app
+      clipped-right>
+        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title>iValet</v-toolbar-title>
+      </v-app-bar>
+      <v-container  class="justify-content" v-show="option === 'Pátio'">
+        <v-row >
+          <v-col>
+            <ParkPage />
           </v-col>
         </v-row>
       </v-container>
+      <v-container v-show="option === 'Home'">
+        <v-expansion-panels v-model="panel" focusable>
+          <v-expansion-panel>
+            <v-expansion-panel-header>Entrada/Saída</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <v-row>
+                <v-col cols="6">
+                  <InPage />
+                </v-col>
+                <v-col cols="6">
+                  <OutPage />
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-container>
+      <v-divider />
+
+      <v-container>
+        <v-expansion-panels focusable>
+          <v-expansion-panel multiple>
+            <v-expansion-panel-header>Dashboard</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              Lorem ipsum dolor sit amet, consectetur adipiscinost
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-container>
     </v-main>
-  </v-app>
+              <v-navigation-drawer
+      app
+      clipped
+      right
+    >
+        <v-list three-line>
+      <template v-for="(item, index) in recents">
+        <v-subheader
+          v-if="item.header"
+          :key="item.header"
+        >Atividades recentes</v-subheader>
 
-  <!--<v-app id="inspire">
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-divider
+          v-else-if="item.divider"
+          :key="index"
+          :inset="item.inset"
+        ></v-divider>
 
-      <v-toolbar-title>iValet</v-toolbar-title>
-
-        <v-tab disabled> {{ option }} </v-tab>
-
-    </v-app-bar>
-
-    <v-navigation-drawer v-model="drawer" fixed temporary>
-      <v-list>
         <v-list-item
-          v-for="item in items"
-          :key="item.icon"
-          @click="(option = item.opt), (drawer = !drawer)"
+          v-else
+          :key="item.title"
         >
-          <v-list-item-icon>
-            <v-icon> {{ item.icon }} </v-icon>
-          </v-list-item-icon>
+          <v-list-item-avatar>
+            <v-img :src="item.avatar"></v-img>
+          </v-list-item-avatar>
 
           <v-list-item-content>
-            {{ item.text }}
+            <v-list-item-title v-html="item.title"></v-list-item-title>
+            <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
-
-        <v-list-item @click="logout">
-          <v-list-item-icon>
-            <v-icon>mdi-exit-to-app</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            Logout
-          </v-list-item-content>
-          </v-list-item>
-      </v-list>
-    </v-navigation-drawer> -->
-
-  <!-- v-show home -->
-  <!-- <InPage v-show="option === 'Home'" />
-    <ParkPage v-show="option === 'Pátio'" />
-    <OutPage v-show="option === 'Saída'" /> -->
-  <!-- v-show in -->
-  <!-- v-show out -->
-
-  <!--</v-app> -->
+      </template>
+    </v-list>
+    </v-navigation-drawer>
+  </v-app>
 </template>
 
 <script>
@@ -114,20 +133,52 @@ export default {
   },
   data() {
     return {
+      panel: 0,
       drawer: true,
       mini: true,
       option: 'Home',
       items: [
         { icon: 'mdi-home', text: 'Home', opt: 'Home' },
-        { icon: 'mdi-car-arrow-left', text: 'Pátio', opt: 'Pátio' },
-        { icon: 'mdi-car-arrow-right', text: 'Saída', opt: 'Saída' },
+        { icon: 'mdi-car-multiple', text: 'Pátio', opt: 'Pátio' },
+        { icon: 'mdi-cog', text: 'Configurações', opt: 'Configurações' },
       ],
-      //     vehicles: [],
-      //   };
-      // },
-      // methods: {
-      //   getVehicles() {
-      //     this.vehicles = axios.get('/transaction/opened/{companyId}'),
+      recents: [
+        { header: 'Atividades Recentes' },
+        {
+          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+          title: 'ERO1232',
+          subtitle:
+            'Entrada',
+        },
+        { divider: true, inset: true },
+        {
+          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+          title: 'ERO1234',
+          subtitle:
+            'Saída',
+        },
+        { divider: true, inset: true },
+        {
+          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+          title: 'ERO1235',
+          subtitle:
+            'Saída',
+        },
+        { divider: true, inset: true },
+        {
+          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+          title: 'ERO1236',
+          subtitle:
+            'Entrada',
+        },
+        { divider: true, inset: true },
+        {
+          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+          title: 'ERO1237',
+          subtitle:
+            'Entrada',
+        },
+      ],
     };
   },
   methods: {
@@ -138,6 +189,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

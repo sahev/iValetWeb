@@ -1,48 +1,12 @@
 <template>
-  <v-main class="grey lighten-2">
-    <v-container>
-      <!-- <v-row>
-        <v-col cols="4" class="justify-content">
-          <v-card height="230">
-            <v-form>
-              <v-card-text>
-                <v-text-field
-                  v-model="newVehicle.placa"
-                  label="Placa"
-                  class="display-1 text--primary"
-                >
-                </v-text-field>
-                <v-text-field
-                  v-model="newVehicle.prisma"
-                  label="Prisma"
-                  class="text--primary"
-                  type="number"
-                ></v-text-field>
-              </v-card-text>
-            </v-form>
-            <v-card-actions>
-              <v-spacer />
-              <v-btn
-                @click="send"
-                text
-                color="deep-purple accent-4"
-                class="ml-auto"
-              >
-                Entrada
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-divider /> -->
+    <v-app id="inspire">
       <v-row>
         <v-col
           v-for="vehicle in openedTransactions"
           :key="vehicle.placa"
-          cols="4"
-          class="justify-content"
+          cols="12"
         >
-          <v-card class="justify-content">
+          <v-card>
             <v-card-text>
               <div>Placa:</div>
               <p class="display-1 text--primary">{{ vehicle.placa }}</p>
@@ -70,8 +34,7 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
-  </v-main>
+    </v-app>
 </template>
 
 <script>
