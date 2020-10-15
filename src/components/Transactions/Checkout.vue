@@ -21,7 +21,7 @@
       <v-btn
         color="green darken-1"
         text
-        @click="(dialog = false), checkout(data.id)"
+        @click="checkout(data.id)"
       >
         Checkout
       </v-btn>
@@ -43,7 +43,6 @@ export default {
   },
   data() {
     return {
-      dialog: false,
     };
   },
   methods: {

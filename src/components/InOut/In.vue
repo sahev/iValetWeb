@@ -1,8 +1,7 @@
 <template>
-  <v-app id="inspire">
-  <v-main class="grey lighten-2">
+  <!-- <v-app id="inspire"> -->
     <v-row>
-      <v-col cols="4" class="justify-content">
+      <v-col>
         <v-card>
           <v-form>
             <v-card-text>
@@ -34,9 +33,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-divider />
-  </v-main>
-  </v-app>
+  <!-- </v-app> -->
 </template>
 
 <script>
