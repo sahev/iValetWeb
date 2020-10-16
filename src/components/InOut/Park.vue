@@ -57,8 +57,8 @@ export default {
   },
   computed: {
     ...mapState({
-      openedTransactions: (a) => a.openedTransactions,
-      finishedTransactions: (a) => a.finishedTransactions,
+      openedTransactions: (a) => a.socket.openedTransactions,
+      finishedTransactions: (a) => a.socket.finishedTransactions,
     }),
   },
   data() {

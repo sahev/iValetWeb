@@ -1,13 +1,14 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app>
-      <v-sheet color="grey lighten-4" class="pa-4">
+
+      <!-- <v-sheet color="grey lighten-4" class="pa-4">
         <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
 
         <div class="text--primary">samuel evangelista</div>
         <div class="text--primary">company xxx</div>
-      </v-sheet>
-
+      </v-sheet> -->
+  <Profile />
       <v-divider></v-divider>
 
       <v-list>
@@ -124,12 +125,14 @@
 import InPage from '../../components/InOut/In.vue';
 import ParkPage from '../../components/InOut/Park.vue';
 import OutPage from '../../components/InOut/Out.vue';
+import Profile from '../../components/Account/Account.vue';
 
 export default {
   components: {
     InPage,
     ParkPage,
     OutPage,
+    Profile,
   },
   data() {
     return {
