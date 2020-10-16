@@ -1,68 +1,41 @@
 <template>
-  <v-app id="inspire">
-        <v-menu
-          bottom
-          min-width="200px"
-          rounded
-          offset-y
-        >
-          <template v-slot:activator="{ on }">
-            <v-btn
-              icon
-              x-large
-              v-on="on"
-            >
-              <v-avatar
-                color="brown"
-                size="48"
-              >
-                <span class="white--text headline">{{ user.initials }}</span>
-              </v-avatar>
-            </v-btn>
-          </template>
-          <v-card>
-            <v-list-item-content class="justify-center">
-              <div class="mx-auto text-center">
-                <v-avatar
-                  color="brown"
-                >
-                  <span class="white--text headline">{{ user.initials }}</span>
-                </v-avatar>
-                <h3>{{ user.fullName }}</h3>
-                <p class="caption mt-1">
-                  {{ user.email }}
-                </p>
-                <v-divider class="my-3"></v-divider>
-                <v-btn
-                  depressed
-                  rounded
-                  text
-                >
-                  Edit Account
-                </v-btn>
-                <v-divider class="my-3"></v-divider>
-                <v-btn
-                  depressed
-                  rounded
-                  text
-                >
-                  Disconnect
-                </v-btn>
-              </div>
-            </v-list-item-content>
-          </v-card>
-        </v-menu>
-  </v-app>
+      <v-sheet color="grey lighten-4" class="pa-4">
+          <v-avatar color="secondary" size="43">
+            <span class="white--text">
+              {{ getInitials(profile.name) }}
+            </span>
+          </v-avatar>
+
+        <div class="text--primary">{{ profile.name }}</div>
+        <div class="text--primary">{{ profile.company[0].name }}</div>
+      </v-sheet>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
-  name: 'Account',
-  data: () => ({
-    user: {
-      initials: 'JD',
-      fullName: 'John Doe',
-      email: 'john.doe@doe.com',
+  name: 'Counter',
+  async created() {
+    await this.teste();
+  },
+  computed: {
+    ...mapState({
+      profile: (state) => state.profile.items,
+    }),
+  },
+  methods: {
+    ...mapActions(['teste']),
+    // ...mapMutations(['setProfile']),
+    getInitials(name) {
+      const lastspace = name.lastIndexOf(' ');
+      const firstname = name.charAt(0);
+      const lastname = name.substring(lastspace + 1, lastspace + 2);
+
+      if (lastspace > 0) {
+        this.lastname = name.substring(lastspace + 1, lastspace + 2);
+      }
+      return (firstname + lastname).toUpperCase();
     },
-  }),
+  },
 };
 </script>

@@ -1,14 +1,11 @@
 import * as io from 'socket.io-client';
-import Vue from 'vue';
-import Vuex from 'vuex';
 import axios from 'axios';
 
-Vue.use(Vuex);
 const token = localStorage.getItem('token');
 // eslint-disable-next-line radix
 const companyId = parseInt(localStorage.getItem('company'));
 
-const store = new Vuex.Store({
+export default {
   state: {
     openedTransactions: [],
     finishedTransactions: [],
@@ -34,13 +31,13 @@ const store = new Vuex.Store({
 
       socket
         .on(`openedTransactions:company:${companyId}`, (res) => {
+          // eslint-disable-next-line no-undef
           this.state.openedTransactions = res;
+          console.log(res);
         })
         .on(`finishedTransactions:company:${companyId}`, (res) => {
           this.state.finishedTransactions = res;
         });
     },
   },
-});
-
-export default store;
+};

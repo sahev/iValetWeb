@@ -44,14 +44,6 @@ const token = localStorage.getItem('token');
 const companyId = parseInt(localStorage.getItem('company'));
 
 export default {
-  components: {
-
-  },
-  created() {
-  },
-  computed: {
-
-  },
   data() {
     return {
       newVehicle: [],
