@@ -4,7 +4,6 @@
       <v-card>
         <v-form>
           <v-card-text>
-          <v-btn @click="countt">count</v-btn> >> {{ teste }}
             <v-autocomplete
               v-model="cVehicle"
               :items="openedTransactions"
@@ -26,14 +25,14 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
-            @click="(model = true)"
+            @click="(model = true), log(openedTransactions)"
             text
             color="deep-purple accent-4"
             class="ml-auto"
           >
             Saída
           </v-btn>
-          <v-dialog v-if="cVehicle" v-model="model" max-width="400">
+          <v-dialog v-if="cVehicle.id" v-model="model" max-width="400">
             <checkout :data="cVehicle" />
           </v-dialog>
         </v-card-actions>
@@ -58,7 +57,6 @@ export default {
     ...mapState({
       openedTransactions: (a) => a.socket.openedTransactions,
       finishedTransactions: (a) => a.socket.finishedTransactions,
-      teste: (a) => a.teste,
     }),
   },
   data() {
@@ -69,12 +67,14 @@ export default {
     };
   },
   methods: {
+    log(data) {
+      console.log(data);
+    },
     setData(data) {
       this.cVehicle = data;
-      console.log(this.cVehicle);
     },
     ...mapActions(['getOpeneds']),
-    ...mapMutations(['getVehicles', 'countt']),
+    ...mapMutations(['getVehicles']),
   },
 };
 </script>

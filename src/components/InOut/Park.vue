@@ -61,11 +61,6 @@ export default {
       finishedTransactions: (a) => a.socket.finishedTransactions,
     }),
   },
-  watch: {
-    openedTransactions(newData, oldData) {
-      console.log('new data > ', newData, 'oldData > ', oldData);
-    },
-  },
   data() {
     return {
       model: false,

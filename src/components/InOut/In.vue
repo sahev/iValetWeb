@@ -31,6 +31,7 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+  <recents :itemss="newVehicle"/>
       </v-col>
     </v-row>
   <!-- </v-app> -->
@@ -38,14 +39,19 @@
 
 <script>
 import axios from 'axios';
+import recents from '../Recents/RecentsActivity.vue';
 
 const token = localStorage.getItem('token');
 // eslint-disable-next-line radix
 const companyId = parseInt(localStorage.getItem('company'));
 
 export default {
+  components: {
+    recents,
+  },
   data() {
     return {
+      teste: { te: '1', te2: '2' },
       newVehicle: [],
     };
   },

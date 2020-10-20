@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Store } from 'vuex';
 import App from './App.vue';
 import router from './router';
-import store from './stores/index';
+import store from './stores/store';
 
 axios.defaults.baseURL = 'http://ragazzitech.caioragazzi.com:81/';
 Vue.config.productionTip = false;
