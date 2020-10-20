@@ -39,10 +39,11 @@ const companyId = parseInt(localStorage.getItem('company'));
 
 export default {
   props: {
-    data: {},
+    data: Object,
   },
   data() {
     return {
+      finishvehicle: [],
     };
   },
   methods: {

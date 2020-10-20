@@ -3,7 +3,7 @@
       <v-row>
         <v-col
           v-for="vehicle in openedTransactions"
-          :key="vehicle.placa"
+          :key="vehicle.id"
           cols="12"
         >
           <v-card>

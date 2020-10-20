@@ -24,20 +24,21 @@ export default {
   mutations: {
     // eslint-disable-next-line no-param-reassign
     setOpened: (state, opened) => { state.openedTransactions = opened; },
-    getVehicles() {
+    getVehicles(state) {
       const socket = io.connect('http://ragazzitech.caioragazzi.com:81/', {
         query: { token },
       });
 
       socket
         .on(`openedTransactions:company:${companyId}`, (res) => {
-          // eslint-disable-next-line no-undef
-          this.state.openedTransactions = res;
-          console.log(res);
+          // eslint-disable-next-line no-param-reassign
+          state.openedTransactions = res;
         })
         .on(`finishedTransactions:company:${companyId}`, (res) => {
-          this.state.finishedTransactions = res;
+          // eslint-disable-next-line no-param-reassign
+          state.finishedTransactions = res;
         });
     },
   },
+
 };

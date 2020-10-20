@@ -25,14 +25,14 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
-            @click="(model = true)"
+            @click="(model = true), log(openedTransactions)"
             text
             color="deep-purple accent-4"
             class="ml-auto"
           >
             Saída
           </v-btn>
-          <v-dialog v-if="cVehicle" v-model="model" max-width="400">
+          <v-dialog v-if="cVehicle.id" v-model="model" max-width="400">
             <checkout :data="cVehicle" />
           </v-dialog>
         </v-card-actions>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import checkout from '../Transactions/Checkout.vue';
 
 export default {
@@ -50,11 +50,13 @@ export default {
     checkout,
   },
   created() {
+    this.getOpeneds();
     this.getVehicles();
   },
   computed: {
     ...mapState({
       openedTransactions: (a) => a.socket.openedTransactions,
+      finishedTransactions: (a) => a.socket.finishedTransactions,
     }),
   },
   data() {
@@ -65,9 +67,13 @@ export default {
     };
   },
   methods: {
+    log(data) {
+      console.log(data);
+    },
     setData(data) {
       this.cVehicle = data;
     },
+    ...mapActions(['getOpeneds']),
     ...mapMutations(['getVehicles']),
   },
 };
