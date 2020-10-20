@@ -23,7 +23,9 @@ const store = new Vuex.Store({
   },
   actions: {},
 
-  mutations: {},
+  mutations: {
+
+  },
   // {
   // eslint-disable-next-line no-param-reassign
   // setProfile: (state) => { state.profile += 1; },

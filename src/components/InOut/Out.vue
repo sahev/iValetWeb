@@ -4,6 +4,7 @@
       <v-card>
         <v-form>
           <v-card-text>
+          <v-btn @click="countt">count</v-btn> >> {{ teste }}
             <v-autocomplete
               v-model="cVehicle"
               :items="openedTransactions"
@@ -42,7 +43,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapActions } from 'vuex';
 import checkout from '../Transactions/Checkout.vue';
 
 export default {
@@ -50,11 +51,14 @@ export default {
     checkout,
   },
   created() {
+    this.getOpeneds();
     this.getVehicles();
   },
   computed: {
     ...mapState({
       openedTransactions: (a) => a.socket.openedTransactions,
+      finishedTransactions: (a) => a.socket.finishedTransactions,
+      teste: (a) => a.teste,
     }),
   },
   data() {
@@ -67,8 +71,10 @@ export default {
   methods: {
     setData(data) {
       this.cVehicle = data;
+      console.log(this.cVehicle);
     },
-    ...mapMutations(['getVehicles']),
+    ...mapActions(['getOpeneds']),
+    ...mapMutations(['getVehicles', 'countt']),
   },
 };
 </script>

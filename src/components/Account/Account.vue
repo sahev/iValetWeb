@@ -6,8 +6,7 @@
             </span>
           </v-avatar>
 
-        <div class="text--primary">{{ profile.name }}</div>
-        <div class="text--primary">{{ profile.company[0].name }}</div>
+        <v-card-subtitle class="text--primary">{{ profile.name }}</v-card-subtitle>
       </v-sheet>
 </template>
 <script>
@@ -27,14 +26,16 @@ export default {
     ...mapActions(['teste']),
     // ...mapMutations(['setProfile']),
     getInitials(name) {
-      const lastspace = name.lastIndexOf(' ');
-      const firstname = name.charAt(0);
-      const lastname = name.substring(lastspace + 1, lastspace + 2);
+      if (name !== undefined) {
+        const lastspace = name.lastIndexOf(' ');
+        const firstname = name.charAt(0);
+        const lastname = name.substring(lastspace + 1, lastspace + 2);
 
-      if (lastspace > 0) {
-        this.lastname = name.substring(lastspace + 1, lastspace + 2);
-      }
-      return (firstname + lastname).toUpperCase();
+        if (lastspace > 0) {
+          this.lastname = name.substring(lastspace + 1, lastspace + 2);
+        }
+        return (firstname + lastname).toUpperCase();
+      } return 0;
     },
   },
 };
