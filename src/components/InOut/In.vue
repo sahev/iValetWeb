@@ -39,6 +39,7 @@
 
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex';
 import recents from '../Recents/RecentsActivity.vue';
 
 const token = localStorage.getItem('token');
@@ -51,24 +52,29 @@ export default {
   },
   data() {
     return {
-      teste: { te: '1', te2: '2' },
       newVehicle: [],
+      status: ['Entrada'],
     };
   },
   methods: {
+    ...mapActions(['setIn']),
     async send() {
       const { placa } = this.newVehicle;
+      const obj = {
+        placa: placa.toString().toUpperCase(),
+        companyId,
+        prismaNumber: this.newVehicle.prisma,
+      };
+
       await axios.post(
         'transaction',
-        {
-          placa: placa.toString().toUpperCase(),
-          companyId,
-          prismaNumber: this.newVehicle.prisma,
-        },
+        obj,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
+      obj.status = this.status;
+      this.setIn(obj);
       this.newVehicle = {};
     },
   },

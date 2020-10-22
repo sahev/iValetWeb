@@ -21,7 +21,7 @@
       <v-btn
         color="green darken-1"
         text
-        @click="checkout(data.id)"
+        @click="checkout(data.id), setOut(data)"
       >
         Checkout
       </v-btn>
@@ -32,6 +32,7 @@
 <script>
 import axios from 'axios';
 import dayjs from 'dayjs';
+import { mapActions } from 'vuex';
 
 const token = localStorage.getItem('token');
 // eslint-disable-next-line radix
@@ -44,9 +45,11 @@ export default {
   data() {
     return {
       finishvehicle: [],
+      status: ['Saída'],
     };
   },
   methods: {
+    ...mapActions(['setOut']),
     datediff(date) {
       const now = dayjs(Date.now());
       return now.diff(date, 'minute');
