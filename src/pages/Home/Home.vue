@@ -14,7 +14,7 @@
         <v-list-item
           v-for="item in items"
           :key="item.text"
-          @click="option = item.opt"
+          @click="option = item.opt, recents = item.recents"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -82,10 +82,22 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
+        <v-expansion-panels focusable>
+          <v-expansion-panel multiple>
+            <v-expansion-panel-header>Perfil</v-expansion-panel-header>
+            <v-expansion-panel-content>
+             <v-row>
+                <v-col>
+                  perfil
+                </v-col>
+              </v-row>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-container>
     </v-main>
 
-  <RecentsActivity />
+  <RecentsActivity v-show="recents" />
 
   </v-app>
 </template>
@@ -97,6 +109,7 @@ import ParkPage from '../../components/InOut/Park.vue';
 import OutPage from '../../components/InOut/Out.vue';
 import Profile from '../../components/Account/Account.vue';
 import RecentsActivity from '../../components/Recents/RecentsActivity.vue';
+import AddPrice from '../../components/TableList/AddPrice.vue';
 
 export default {
   components: {
@@ -105,17 +118,25 @@ export default {
     OutPage,
     Profile,
     RecentsActivity,
+    AddPrice,
   },
   data() {
     return {
+      recents: true,
       panel: 0,
       drawer: true,
 
       option: 'Home',
       items: [
-        { icon: 'mdi-home', text: 'Home', opt: 'Home' },
-        { icon: 'mdi-car-multiple', text: 'Pátio', opt: 'Pátio' },
-        { icon: 'mdi-cog', text: 'Configurações', opt: 'cfg' },
+        {
+          icon: 'mdi-home', text: 'Home', opt: 'Home', recents: true,
+        },
+        {
+          icon: 'mdi-car-multiple', text: 'Pátio', opt: 'Pátio', recents: true,
+        },
+        {
+          icon: 'mdi-cog', text: 'Configurações', opt: 'cfg', recents: false,
+        },
       ],
     };
   },
