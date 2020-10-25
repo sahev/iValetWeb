@@ -45,11 +45,11 @@ export default {
     ...mapState({
       openedTransactions: (a) => a.socket.openedTransactions,
       finishedTransactions: (a) => a.socket.finishedTransactions,
-      recentss: (a) => a.socket.recents,
+      recents: (a) => a.socket.recents,
     }),
     reverse() {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      return this.recentss.reverse();
+      return this.recents.reverse();
     },
   },
   data() {

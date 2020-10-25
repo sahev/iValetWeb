@@ -70,9 +70,6 @@ export default {
     };
   },
   methods: {
-    log(data) {
-      console.log(data);
-    },
     setStatus(data) {
       this.cVehicle.info = data;
     },

@@ -72,16 +72,20 @@
       <v-container v-show="option === 'cfg'">
         <v-expansion-panels focusable>
           <v-expansion-panel multiple>
-            <v-expansion-panel-header>Dashboard</v-expansion-panel-header>
+            <v-expansion-panel-header>Tabela de preços</v-expansion-panel-header>
             <v-expansion-panel-content>
-              Lorem ipsum dolor sit amet, consectetur adipiscinost
+             <v-row>
+                <v-col>
+                  <AddPrice />
+                </v-col>
+              </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
       </v-container>
     </v-main>
 
-    <!-- <RecentsActivity /> -->
+  <RecentsActivity />
 
   </v-app>
 </template>
@@ -92,7 +96,7 @@ import InPage from '../../components/InOut/In.vue';
 import ParkPage from '../../components/InOut/Park.vue';
 import OutPage from '../../components/InOut/Out.vue';
 import Profile from '../../components/Account/Account.vue';
-// import RecentsActivity from '../../components/Recents/RecentsActivity.vue';
+import RecentsActivity from '../../components/Recents/RecentsActivity.vue';
 
 export default {
   components: {
@@ -100,7 +104,7 @@ export default {
     ParkPage,
     OutPage,
     Profile,
-    // RecentsActivity,
+    RecentsActivity,
   },
   data() {
     return {
