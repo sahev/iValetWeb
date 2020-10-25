@@ -15,7 +15,8 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'Counter',
   async created() {
-    await this.teste();
+    await this.getProfile();
+    console.log(this.profile);
   },
   computed: {
     ...mapState({
@@ -23,7 +24,7 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(['teste']),
+    ...mapActions(['getProfile']),
     // ...mapMutations(['setProfile']),
     getInitials(name) {
       if (name !== undefined) {

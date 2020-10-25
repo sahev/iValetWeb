@@ -1,79 +1,46 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col id="col" cols="2" sm="2">
-        <v-menu
-          ref="menu1"
-          v-model="inp1"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          :return-value.sync="data.from"
-          transition="scale-transition"
-          offset-y
-          max-width="250px"
-          min-width="250px"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="data.from"
-              label="De:"
-              prepend-icon="mdi-clock-time-four-outline"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-time-picker
-            v-if="inp1"
-            v-model="data.from"
-            full-width
-            @click:minute="$refs.menu1.save(data.from)"
-          ></v-time-picker>
-        </v-menu>
-      </v-col>
+    <div v-for="(item, i) in items" :key="i">
+      <v-row>
+        <v-col id="col" cols="2" sm="2">
+          <v-text-field
+            v-model="item.from"
+            label="De:"
+            prepend-icon="mdi-clock-time-four-outline"
+          ></v-text-field>
+        </v-col>
 
-      <v-col id="col" cols="2" sm="2">
-        <v-menu
-          ref="menu2"
-          v-model="inp2"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          :return-value.sync="data.to"
-          transition="scale-transition"
-          offset-y
-          max-width="250px"
-          min-width="250px"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="data.to"
-              label="Até:"
-              prepend-icon="mdi-clock-time-four-outline"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-time-picker
-            v-if="inp2"
-            v-model="data.to"
-            full-width
-            @click:minute="$refs.menu2.save(data.to)"
-          ></v-time-picker>
-        </v-menu>
-      </v-col>
+        <v-col id="col" cols="2" sm="2">
+          <v-text-field
+            v-model="item.to"
+            label="Até:"
+            prepend-icon="mdi-clock-time-four-outline"
+          ></v-text-field>
+        </v-col>
 
-      <v-col id="col" cols="2" sm="2">
-        <v-text-field
-          v-model="data.price"
-          label="Valor:"
-          prepend-icon="mdi-currency-usd"
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-btn @click="addPrice">
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
+        <v-col id="col" cols="2" sm="3">
+          <v-text-field
+            v-model="item.tolerance"
+            label="Tolerância:"
+            prepend-icon="mdi-clock-time-four-outline"
+          ></v-text-field>
+        </v-col>
+
+        <v-col id="col" cols="2" sm="2">
+          <v-text-field
+            v-model="item.price"
+            label="Valor:"
+            prepend-icon="mdi-currency-usd"
+          ></v-text-field>
+        </v-col>
+
+        <v-icon @click="add(data)">mdi-check</v-icon>
+
+        <v-icon v-if="i > 0" @click="remove(i)">mdi-close</v-icon>
+
+      </v-row>
+
+    </div>
   </v-container>
 </template>
 <script>
@@ -82,21 +49,44 @@ import { mapActions } from 'vuex';
 export default {
   data() {
     return {
+      items: [
+        {
+          to: null,
+          from: null,
+          tolerance: null,
+          price: null,
+        },
+      ],
       inp1: null,
       inp2: null,
       data: {
-        to: null,
-        from: null,
-        price: null,
+        // to: null,
+        // from: null,
+        // tolerance: null,
+        // price: null,
       },
     };
   },
   methods: {
-    ...mapActions(['setFrom', 'setTo', 'setPrice']),
+    ...mapActions(['setPrice']),
     addPrice() {
       // eslint-disable-next-line no-unused-expressions
-      this.setPrice(this.data);
+      // this.setPrice(this.data);
       console.log('add > ', this.data);
+      this.data.push();
+    },
+    add(data) {
+      this.items.push({
+        to: data.to,
+        from: data.from,
+        tolerance: data.tolerance,
+        price: data.price,
+      });
+      console.log(this.items);
+    },
+
+    remove(index) {
+      this.items.splice(index, 1);
     },
   },
 };

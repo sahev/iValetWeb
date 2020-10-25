@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      dw: ['s', 't', 'q', 'q', 's', 's'],
+      dw: ['s', 't', 'q', 'q', 's', 's', 'd'],
       toggle_exclusive: [],
     };
   },
