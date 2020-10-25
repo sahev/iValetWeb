@@ -24,7 +24,7 @@
 
           <v-list-item-content>
             <v-list-item-title v-html="item.placa"></v-list-item-title>
-            <v-list-item-subtitle v-html="item.status[0]"></v-list-item-subtitle>
+            <v-list-item-subtitle v-html="item.info.status"></v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>

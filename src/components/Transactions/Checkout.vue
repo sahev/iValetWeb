@@ -45,7 +45,6 @@ export default {
   data() {
     return {
       finishvehicle: [],
-      status: ['Saída'],
     };
   },
   methods: {

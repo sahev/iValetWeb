@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       newVehicle: [],
-      status: ['Entrada'],
+      info: { status: 'Entrada', date: Date.now() },
     };
   },
   methods: {
@@ -73,7 +73,7 @@ export default {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      obj.status = this.status;
+      obj.info = this.info;
       this.setIn(obj);
       this.newVehicle = {};
     },

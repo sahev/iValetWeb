@@ -69,7 +69,7 @@
       </v-container>
       <v-divider />
 
-      <v-container>
+      <v-container v-show="option === 'cfg'">
         <v-expansion-panels focusable>
           <v-expansion-panel multiple>
             <v-expansion-panel-header>Dashboard</v-expansion-panel-header>
@@ -111,7 +111,7 @@ export default {
       items: [
         { icon: 'mdi-home', text: 'Home', opt: 'Home' },
         { icon: 'mdi-car-multiple', text: 'Pátio', opt: 'Pátio' },
-        { icon: 'mdi-cog', text: 'Configurações', opt: 'Configurações' },
+        { icon: 'mdi-cog', text: 'Configurações', opt: 'cfg' },
       ],
     };
   },
