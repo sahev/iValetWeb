@@ -66,7 +66,7 @@ export default {
       model: false,
       cVehicle: [],
       newVehicle: [],
-      status: ['Saída'],
+      info: { status: 'Saída', date: Date.now() },
     };
   },
   methods: {
@@ -78,7 +78,7 @@ export default {
     },
     setData(data) {
       this.cVehicle = data;
-      this.cVehicle.status = this.status;
+      this.cVehicle.info = this.info;
     },
     async send() {
       const { placa } = this.newVehicle;

@@ -24,7 +24,7 @@
 
           <v-list-item-content>
             <v-list-item-title v-html="item.placa"></v-list-item-title>
-            <v-list-item-subtitle v-html="item.status[0]"></v-list-item-subtitle>
+            <v-list-item-subtitle v-html="item.info.status"></v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -45,11 +45,11 @@ export default {
     ...mapState({
       openedTransactions: (a) => a.socket.openedTransactions,
       finishedTransactions: (a) => a.socket.finishedTransactions,
-      recentss: (a) => a.socket.recents,
+      recents: (a) => a.socket.recents,
     }),
     reverse() {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      return this.recentss.reverse();
+      return this.recents.reverse();
     },
   },
   data() {

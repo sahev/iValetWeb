@@ -25,15 +25,15 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
-            @click="(model = true), setStatus(status)"
+            @click="(model = true), setStatus(info)"
             text
             color="deep-purple accent-4"
             class="ml-auto"
           >
             Saída
           </v-btn>
-          <v-dialog v-if="cVehicle.id" v-model="model" max-width="400">
-            <checkout :data="cVehicle" />
+          <v-dialog v-model="model" max-width="400">
+            <checkout :data="cVehicle"/>
           </v-dialog>
         </v-card-actions>
       </v-card>
@@ -64,17 +64,14 @@ export default {
   data() {
     return {
       model: false,
-      status: ['Saída'],
+      info: { status: 'Saída', date: Date.now() },
       cVehicle: [],
       newVehicle: [],
     };
   },
   methods: {
-    log(data) {
-      console.log(data);
-    },
     setStatus(data) {
-      this.cVehicle.status = data;
+      this.cVehicle.info = data;
     },
     ...mapActions(['getOpeneds']),
     // ...mapMutations(['getVehicles']),

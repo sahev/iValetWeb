@@ -31,7 +31,7 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-  <recents :itemss="newVehicle"/>
+  <recents v-if="model" :itemss="newVehicle"/>
       </v-col>
     </v-row>
   <!-- </v-app> -->
@@ -52,8 +52,9 @@ export default {
   },
   data() {
     return {
+      model: false,
       newVehicle: [],
-      status: ['Entrada'],
+      info: { status: 'Entrada', date: Date.now() },
     };
   },
   methods: {
@@ -73,7 +74,7 @@ export default {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      obj.status = this.status;
+      obj.info = this.info;
       this.setIn(obj);
       this.newVehicle = {};
     },
