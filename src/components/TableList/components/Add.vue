@@ -59,12 +59,7 @@ export default {
       ],
       inp1: null,
       inp2: null,
-      data: {
-        // to: null,
-        // from: null,
-        // tolerance: null,
-        // price: null,
-      },
+      data: {},
     };
   },
   methods: {
