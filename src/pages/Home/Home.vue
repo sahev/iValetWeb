@@ -14,7 +14,7 @@
         <v-list-item
           v-for="item in items"
           :key="item.text"
-          @click="option = item.opt, recents = item.recents"
+          @click="(option = item.opt), (recents = item.recents)"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -26,6 +26,34 @@
             }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-group
+          v-for="item in config"
+          :key="item.text"
+          :prepend-icon="item.icon"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title
+                class="d-flex"
+                v-text="item.text"
+              ></v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item
+            @click="option = child.opt"
+            v-for="child in item.items"
+            :key="child.name"
+          >
+            <v-list-item-content>
+              <v-list-item-title
+                class="mx-auto"
+                v-text="child.name"
+              ></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+
         <v-list-item @click="logout">
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
@@ -68,15 +96,23 @@
         </v-expansion-panels>
       </v-container>
       <v-divider />
+      <v-container v-show="option === 'table'">
+        <AddTable />
+      </v-container>
+      <v-container v-show="option === 'Perfil'">
+        <v-col> perfil </v-col>
+      </v-container>
 
-      <v-container v-show="option === 'cfg'">
+      <!-- <v-container v-show="option === 'cfg'">
         <v-expansion-panels focusable>
           <v-expansion-panel multiple>
-            <v-expansion-panel-header>Tabela de preços</v-expansion-panel-header>
+            <v-expansion-panel-header
+              >Tabela de preços</v-expansion-panel-header
+            >
             <v-expansion-panel-content>
-             <v-row>
+              <v-row>
                 <v-col>
-                  <AddPrice />
+                  <AddTable />
                 </v-col>
               </v-row>
             </v-expansion-panel-content>
@@ -86,19 +122,16 @@
           <v-expansion-panel multiple>
             <v-expansion-panel-header>Perfil</v-expansion-panel-header>
             <v-expansion-panel-content>
-             <v-row>
-                <v-col>
-                  perfil
-                </v-col>
+              <v-row>
+                <v-col> perfil </v-col>
               </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
-      </v-container>
+      </v-container> -->
     </v-main>
 
-  <RecentsActivity v-show="recents" />
-
+    <RecentsActivity v-show="recents" />
   </v-app>
 </template>
 
@@ -109,7 +142,7 @@ import ParkPage from '../../components/InOut/Park.vue';
 import OutPage from '../../components/InOut/Out.vue';
 import Profile from '../../components/Account/Account.vue';
 import RecentsActivity from '../../components/Recents/RecentsActivity.vue';
-import AddPrice from '../../components/TableList/AddPrice.vue';
+import AddTable from '../../components/TableList/AddTable.vue';
 
 export default {
   components: {
@@ -118,7 +151,7 @@ export default {
     OutPage,
     Profile,
     RecentsActivity,
-    AddPrice,
+    AddTable,
   },
   data() {
     return {
@@ -129,13 +162,30 @@ export default {
       option: 'Home',
       items: [
         {
-          icon: 'mdi-home', text: 'Home', opt: 'Home', recents: true,
+          icon: 'mdi-home',
+          text: 'Home',
+          opt: 'Home',
+          recents: true,
         },
         {
-          icon: 'mdi-car-multiple', text: 'Pátio', opt: 'Pátio', recents: true,
+          icon: 'mdi-car-multiple',
+          text: 'Pátio',
+          opt: 'Pátio',
+          recents: true,
         },
+      ],
+      config: [
         {
-          icon: 'mdi-cog', text: 'Configurações', opt: 'cfg', recents: false,
+          icon: 'mdi-cog',
+          text: 'Configurações',
+          items: [
+            {
+              name: 'Tabela de Preços', opt: 'table', icon: 'mdi-home', recents: false,
+            },
+            {
+              name: 'Perfil', opt: 'Perfil', icon: 'mdi-home', recents: false,
+            },
+          ],
         },
       ],
     };

@@ -21,7 +21,7 @@
       <v-btn
         color="green darken-1"
         text
-        @click="checkout(data.id), setOut(data)"
+        @click="checkout(data.id, companyId), setOut(data)"
       >
         Checkout
       </v-btn>
@@ -32,11 +32,11 @@
 <script>
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
-const token = localStorage.getItem('token');
+// const token = localStorage.getItem('token');
 // eslint-disable-next-line radix
-const companyId = parseInt(localStorage.getItem('company'));
+// const companyId = parseInt(localStorage.getItem('company'));
 
 export default {
   props: {
@@ -47,15 +47,21 @@ export default {
       finishvehicle: [],
     };
   },
+  computed: {
+    ...mapState({
+      companyId: (state) => state.profile.items.companyId,
+      token: (state) => state.profile.items.token,
+    }),
+  },
   methods: {
     ...mapActions(['setOut']),
     datediff(date) {
       const now = dayjs(Date.now());
       return now.diff(date, 'minute');
     },
-    async checkout(transactionId) {
+    async checkout(transactionId, companyId) {
       await axios.put('transaction/finish', null, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${this.token}` },
         params: { transactionId, companyId },
       });
     },

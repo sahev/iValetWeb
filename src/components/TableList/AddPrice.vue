@@ -1,5 +1,20 @@
 <template>
   <v-container>
+    <v-row align="center" justify="center">
+      <v-btn-toggle v-model="id_dw" multiple>
+        <v-btn
+          v-for="(item, index) in dw"
+          :key="index"
+          color="secondary"
+          class="ma-1"
+          medium
+          outlined
+        >
+          {{ item }}
+        </v-btn>
+      </v-btn-toggle>
+      model: {{ id_dw }}
+    </v-row>
     <v-row>
       <v-subheader> AddFixedPrice </v-subheader>
       <v-subheader>
@@ -24,10 +39,9 @@
       </v-subheader>
     </v-row>
 
-      <AddRotativePrice v-show="rotative" />
+    <AddRotativePrice v-show="rotative" :id_dw="id_dw" />
 
-      <AddFixedPrice v-show="fixed"/>
-
+    <AddFixedPrice v-show="fixed" />
   </v-container>
 </template>
 
@@ -42,6 +56,8 @@ export default {
   },
   data() {
     return {
+      dw: ['s', 't', 'q', 'q', 's', 's', 'd'],
+      id_dw: [],
       switch1: false,
       switch2: false,
       rotative: false,

@@ -12,6 +12,7 @@ export default {
     setPrice: (state, data) => {
       // eslint-disable-next-line no-param-reassign
       state.items = data;
+      console.log(state.items);
     },
   },
 };
