@@ -38,10 +38,12 @@
         ></v-switch>
       </v-subheader>
     </v-row>
-
+<v-expand-transition>
     <AddRotativePrice v-show="rotative" :id_dw="id_dw" />
-
+</v-expand-transition>
+  <v-expand-transition>
     <AddFixedPrice v-show="fixed" />
+    </v-expand-transition>
   </v-container>
 </template>
 

@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-card>
+      <v-card-title>Tabela de preços</v-card-title>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -8,7 +9,7 @@
             bottom
             right
             absolute
-            @click="(dialog = !dialog), (table = true)"
+            @click="(dialog = !dialog), (table = true), expand = !expand"
             v-bind="attrs"
             v-on="on"
           >
@@ -18,9 +19,12 @@
         <span>Adicionar novos preços</span>
       </v-tooltip>
 
-      <v-container v-show="table">
-        <AddPrice />
-      </v-container>
+      <v-expand-transition>
+
+        <AddPrice v-show="expand" />
+
+      </v-expand-transition>
+
     </v-card>
   </v-container>
 </template>
@@ -37,6 +41,7 @@ export default {
       title: '',
       dialog: false,
       table: false,
+      expand: false,
     };
   },
   methods: {
