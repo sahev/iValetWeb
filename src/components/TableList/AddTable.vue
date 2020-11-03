@@ -1,40 +1,27 @@
 <template>
   <v-container>
     <v-card>
-        <v-card-title>{{ title }}</v-card-title>
-      <v-btn
-        fab
-        color="primary"
-        bottom
-        right
-        absolute
-        @click="dialog = !dialog"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            fab
+            bottom
+            right
+            absolute
+            @click="(dialog = !dialog), (table = true)"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </template>
+        <span>Adicionar novos preços</span>
+      </v-tooltip>
 
       <v-container v-show="table">
         <AddPrice />
       </v-container>
     </v-card>
-
-    <v-card> </v-card>
-    <v-dialog v-model="dialog" max-width="500px">
-      <v-card>
-        <v-card-text>
-          <v-text-field label="Tabela de preço"></v-text-field>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn color="primary" v-model="title"
-          @click="(dialog = false), (table = true)">
-            Submit
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-container>
 </template>
 
@@ -55,7 +42,7 @@ export default {
   methods: {
     setTitle(event) {
       this.title = event.target.value;
-      console.log('ttitle>', this.title, event.target);
+      console.log('title>', this.title, event.target);
     },
   },
 };
