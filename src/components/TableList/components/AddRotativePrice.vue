@@ -54,9 +54,9 @@
             required
           ></v-text-field>
         </v-col>
-<div>
+<!-- <div>
         <v-icon style="margin-top: 35px;" @click="add(item, i)">mdi-check</v-icon>
-</div>
+</div> -->
 <div>
         <v-icon style="margin-top: 35px;" v-if="i > 0" @click="remove(i)">mdi-close</v-icon>
         </div>
@@ -84,7 +84,7 @@
 
     </div>
           <div>
-        <v-icon @click="addrows()">mdi-check</v-icon>
+        <v-icon @click="addrows()">mdi-plus</v-icon>
 </div>
 
   </v-container>
