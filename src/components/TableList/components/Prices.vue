@@ -10,8 +10,11 @@
             v-if="price.weekDay"
             :key="i"
           >
+          <v-list-item-icon>
+              {{ i + 1 }}
+              </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>{{ price.weekDay }}</v-list-item-title>
+              <v-list-item-subtitle>{{ split(price.weekDay) }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -62,6 +65,9 @@ export default {
     ...mapActions(['getPrices']),
     setTitle() {
       console.log('title>', this.prices.lenght);
+    },
+    split(data) {
+      return data.replace('|', ', ');
     },
   },
 };
