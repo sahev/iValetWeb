@@ -54,13 +54,39 @@
             required
           ></v-text-field>
         </v-col>
-
-        <v-icon @click="add(item, i)">mdi-check</v-icon>
-
-        <v-icon v-if="i > 0" @click="remove(i)">mdi-close</v-icon>
+<div>
+        <v-icon style="margin-top: 35px;" @click="add(item, i)">mdi-check</v-icon>
+</div>
+<div>
+        <v-icon style="margin-top: 35px;" v-if="i > 0" @click="remove(i)">mdi-close</v-icon>
+        </div>
       </v-row>
       </v-form>
+
+<v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            fab
+            bottom
+            right
+            absolute
+            @click="log(), setButton(false)"
+            v-bind="attrs"
+            v-on="on"
+            v-show="statusButton"
+            color="success"
+          >
+            <v-icon>mdi-table-plus</v-icon>
+          </v-btn>
+        </template>
+        <span>Salvar</span>
+      </v-tooltip>
+
     </div>
+          <div>
+        <v-icon @click="addrows()">mdi-check</v-icon>
+</div>
+
   </v-container>
 </template>
 
@@ -74,6 +100,7 @@ export default {
   components: {},
   data() {
     return {
+      form: {},
       items: [
         {
           to: null,
@@ -88,10 +115,11 @@ export default {
       data: [],
     };
   },
-  created() {},
+  created() {
+  },
   computed: {
     ...mapState({
-      // items: (a) => a.addrotative.items,
+      statusButton: (a) => a.addrotative.statusButton,
     }),
     reverse() {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
@@ -99,7 +127,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['setPrice']),
+    log() {
+      this.setButton(false);
+      console.log(this.statusButton);
+    },
+    ...mapActions(['setPrice', 'setButton']),
     addPrice() {
       // eslint-disable-next-line no-unused-expressions
       // this.setPrice(this.data);
@@ -122,12 +154,25 @@ export default {
           price: data.price,
           weekDay: this.id_dw,
         });
+        // eslint-disable-next-line no-unused-expressions
+        // this.setPrice(this.data);
         console.log(this.data, this.id_dw);
+        console.log(this.$refs.form[index]);
       }
-      console.log(this.$refs.form[index]);
     },
     remove(index) {
       this.items.splice(index, 1);
+      this.data.splice(index, 1);
+    },
+    addrows() {
+      this.data.push(this.form);
+      this.items.push({
+        to: null,
+        from: null,
+        tolerance: null,
+        price: null,
+        weekDay: null,
+      });
     },
   },
 };

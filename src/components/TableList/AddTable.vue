@@ -9,9 +9,11 @@
             bottom
             right
             absolute
-            @click="(dialog = !dialog), (table = true), expand = !expand"
+            @click="expand = !expand,
+            setButton(true)"
             v-bind="attrs"
             v-on="on"
+            v-show="!statusButton"
           >
             <v-icon>mdi-plus</v-icon>
           </v-btn>
@@ -19,18 +21,42 @@
         <span>Adicionar novos preços</span>
       </v-tooltip>
 
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            fab
+            bottom
+            left
+            absolute
+            @click="expand = !expand,
+            setButton(false)"
+            v-bind="attrs"
+            v-on="on"
+            v-show="statusButton"
+          >
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-btn>
+        </template>
+        <span>Voltar</span>
+      </v-tooltip>
+
       <v-expand-transition>
 
-        <AddPrice v-show="expand" />
+        <AddPrice v-show="statusButton" />
 
       </v-expand-transition>
+
+      <v-card-text v-show="!statusButton" >
+        teste
+        </v-card-text>
 
     </v-card>
   </v-container>
 </template>
 
 <script>
-import AddPrice from './AddPrice.vue';
+import { mapActions, mapState } from 'vuex';
+import AddPrice from './components/AddPrice.vue';
 
 export default {
   components: {
@@ -38,13 +64,18 @@ export default {
   },
   data() {
     return {
-      title: '',
-      dialog: false,
-      table: false,
+      add: true,
+      save: false,
       expand: false,
     };
   },
+  computed: {
+    ...mapState({
+      statusButton: (a) => a.addrotative.statusButton,
+    }),
+  },
   methods: {
+    ...mapActions(['setButton']),
     setTitle(event) {
       this.title = event.target.value;
       console.log('title>', this.title, event.target);

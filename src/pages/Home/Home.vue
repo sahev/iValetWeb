@@ -47,6 +47,7 @@
           >
             <v-list-item-content>
               <v-list-item-title
+
                 class="mx-auto"
                 v-text="child.name"
               ></v-list-item-title>
