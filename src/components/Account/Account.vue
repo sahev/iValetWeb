@@ -16,7 +16,6 @@ export default {
   name: 'Counter',
   async created() {
     await this.getProfile();
-    console.log(this.profile);
   },
   computed: {
     ...mapState({
