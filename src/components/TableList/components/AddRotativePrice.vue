@@ -70,7 +70,7 @@
             bottom
             right
             absolute
-            @click="log(), setButton(false)"
+            @click="log(), add(item, i)"
             v-bind="attrs"
             v-on="on"
             v-show="statusButton"
@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     log() {
-      this.setButton(false);
+      // this.setButton(false);
       console.log(this.statusButton);
     },
     ...mapActions(['setPrice', 'setButton']),
@@ -155,17 +155,34 @@ export default {
           weekDay: this.id_dw,
         });
         // eslint-disable-next-line no-unused-expressions
+        this.setButton(false);
+        // eslint-disable-next-line no-unused-expressions
         // this.setPrice(this.data);
         console.log(this.data, this.id_dw);
         console.log(this.$refs.form[index]);
       }
     },
+    save(data, index) {
+      if (this.$refs.form[index].validate()) {
+        this.data.push({
+          to: data.to,
+          from: data.from,
+          tolerance: data.tolerance,
+          price: data.price,
+          weekDay: this.id_dw,
+        });
+        // eslint-disable-next-line no-unused-expressions
+        this.setButton(false);
+        // eslint-disable-next-line no-unused-expressions
+        // this.setPrice(this.data);
+        console.log('save item >>>> ', this.data);
+      }
+    },
     remove(index) {
-      this.items.splice(index, 1);
+      this.data.splice(index, 1);
       this.data.splice(index, 1);
     },
     addrows() {
-      this.data.push(this.form);
       this.items.push({
         to: null,
         from: null,

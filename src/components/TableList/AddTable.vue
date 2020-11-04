@@ -46,8 +46,8 @@
 
       </v-expand-transition>
 
-      <v-card-text v-show="!statusButton" >
-        teste
+      <v-card-text v-show="!statusButton">
+        <Prices />
         </v-card-text>
 
     </v-card>
@@ -57,10 +57,12 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import AddPrice from './components/AddPrice.vue';
+import Prices from './components/Prices.vue';
 
 export default {
   components: {
     AddPrice,
+    Prices,
   },
   data() {
     return {
@@ -69,16 +71,19 @@ export default {
       expand: false,
     };
   },
+  async mounted() {
+    this.getPrices();
+  },
   computed: {
     ...mapState({
       statusButton: (a) => a.addrotative.statusButton,
+      prices: (a) => a.prices.items,
     }),
   },
   methods: {
-    ...mapActions(['setButton']),
-    setTitle(event) {
-      this.title = event.target.value;
-      console.log('title>', this.title, event.target);
+    ...mapActions(['setButton', 'getPrices']),
+    setTitle() {
+      console.log('title>', this.prices);
     },
   },
 };
