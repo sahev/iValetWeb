@@ -101,6 +101,7 @@ export default {
   data() {
     return {
       form: {},
+      type: 2,
       items: [
         {
           to: null,
@@ -141,6 +142,7 @@ export default {
     add(data, index) {
       if (this.$refs.form[index].validate()) {
         this.items.push({
+          type: this.type,
           to: null,
           from: null,
           tolerance: null,
@@ -148,18 +150,18 @@ export default {
           weekDay: null,
         });
         this.data.push({
+          type: this.type,
           to: data.to,
           from: data.from,
           tolerance: data.tolerance,
-          price: data.price,
+          price: Number(data.price),
           weekDay: this.id_dw,
         });
         // eslint-disable-next-line no-unused-expressions
         this.setButton(false);
         // eslint-disable-next-line no-unused-expressions
         // this.setPrice(this.data);
-        console.log(this.data, this.id_dw);
-        console.log(this.$refs.form[index]);
+        console.log(this.data);
       }
     },
     save(data, index) {
@@ -168,7 +170,7 @@ export default {
           to: data.to,
           from: data.from,
           tolerance: data.tolerance,
-          price: data.price,
+          price: parseInt(data.price, 2),
           weekDay: this.id_dw,
         });
         // eslint-disable-next-line no-unused-expressions

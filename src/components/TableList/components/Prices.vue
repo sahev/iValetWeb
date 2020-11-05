@@ -1,58 +1,43 @@
 <template>
-  <v-col
-    cols="8"
-    sm="11"
-    offset-lx="2"
-  >
-      <v-list>
-        <template v-for="(price, i) in prices">
-          <v-list-item
-            v-if="price.weekDay"
-            :key="i"
-          >
-          <v-list-item-icon>
-              {{ i + 1 }}
-              </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle>{{ split(price.weekDay) }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+  <v-col md="11">
+    <v-list>
+      <v-subheader>
+        <v-col>
+        <v-row> Tipo </v-row>
+        </v-col>
+                <!-- <v-col>
+        <v-row> teste </v-row>
+        </v-col> -->
+         <v-col>
+        <v-row> Dias da semana </v-row>
+        </v-col>
+      </v-subheader>
+      <template v-for="(price, i) in prices">
+        <v-list-item v-if="price.weekDay" :key="i">
 
-          <v-divider
-            :key="price.id"
-            inset
-          ></v-divider>
-        </template>
-      </v-list>
+          <!-- <v-list-item-content> -->
+            <div> {{ price.type == 1  ? 'Fixo' : price.type == 2 ? 'Rotativo' : price.type }}</div>
+
+          <div class="days" v-for="(days, i) in split(price.weekDay)" :key="i">
+            <v-row align="center" justify="start">
+              <v-chip link>
+                {{ days }}
+              </v-chip>
+            </v-row>
+          </div>
+          <!-- <v-list-item-subtitle>{{ split(price.weekDay) }}</v-list-item-subtitle> -->
+          <!-- </v-list-item-content> -->
+        </v-list-item>
+        <v-divider :key="price.id" inset></v-divider>
+      </template>
+    </v-list>
   </v-col>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
 
 export default {
-  data: () => ({
-    inset: true,
-    items: [
-      {
-        action: 'mdi-label',
-        title: 'List item 1',
-      },
-      {
-        divider: true,
-      },
-      {
-        action: 'mdi-label',
-        title: 'List item 2',
-      },
-      {
-        divider: true,
-      },
-      {
-        action: 'mdi-label',
-        title: 'List item 3',
-      },
-    ],
-  }),
+  data: () => ({}),
   async mounted() {
     this.getPrices();
   },
@@ -67,8 +52,16 @@ export default {
       console.log('title>', this.prices.lenght);
     },
     split(data) {
-      return data.replace('|', ', ');
+      return data.split('|');
     },
   },
 };
 </script>
+<style scoped>
+.days {
+  margin-left: 40px;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* flex-wrap: wrap; */
+}
+</style>
