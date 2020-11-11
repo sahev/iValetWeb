@@ -6,6 +6,7 @@ const token = localStorage.getItem('token');
 export default {
   state: {
     items: [],
+    details: [],
   },
   actions: {
     async getPrices({ commit }) {
@@ -16,6 +17,14 @@ export default {
           commit('getPrices', res.data);
         });
     },
+    async getPriceDetails({ commit }, uniqueId) {
+      await axios
+        .get(`/price/uniqueId/${uniqueId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }).then((res) => {
+          commit('getPriceDetails', res.data);
+        });
+    },
   },
   mutations: {
     // eslint-disable-next-line no-param-reassign
@@ -24,8 +33,11 @@ export default {
       state.items = data;
       // eslint-disable-next-line array-callback-return
       state.items.map((res) => { res.divider = true; });
-
-      console.log(state.items);
+    },
+    getPriceDetails: (state, data) => {
+      // eslint-disable-next-line no-param-reassign
+      state.details = data;
+      console.log(state.details);
     },
   },
 };
