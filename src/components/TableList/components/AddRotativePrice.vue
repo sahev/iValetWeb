@@ -70,7 +70,7 @@
             bottom
             right
             absolute
-            @click="log(), add(item, i)"
+            @click="add(item, i)"
             v-bind="attrs"
             v-on="on"
             v-show="statusButton"
@@ -155,13 +155,13 @@ export default {
           from: data.from,
           tolerance: data.tolerance,
           price: Number(data.price),
-          weekDay: this.id_dw,
+          weekDay: this.convertDays(this.id_dw).join(', ').replaceAll(', ', '|'),
         });
         // eslint-disable-next-line no-unused-expressions
         this.setButton(false);
         // eslint-disable-next-line no-unused-expressions
         // this.setPrice(this.data);
-        console.log(this.data);
+        // console.log('add>', this.data);
       }
     },
     save(data, index) {
@@ -171,13 +171,13 @@ export default {
           from: data.from,
           tolerance: data.tolerance,
           price: parseInt(data.price, 2),
-          weekDay: this.id_dw,
+          weekDay: this.convertDays(this.id_dw).join(', '),
         });
         // eslint-disable-next-line no-unused-expressions
         this.setButton(false);
         // eslint-disable-next-line no-unused-expressions
         // this.setPrice(this.data);
-        console.log('save item >>>> ', this.data);
+        // console.log('save item >>>> ', this.data);
       }
     },
     remove(index) {
@@ -192,6 +192,10 @@ export default {
         price: null,
         weekDay: null,
       });
+    },
+    convertDays(data) {
+      const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+      return data.map((res) => days[res] || '');
     },
   },
 };
