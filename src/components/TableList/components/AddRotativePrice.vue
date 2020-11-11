@@ -31,7 +31,7 @@
 
         <v-col id="col" cols="2" sm="3">
           <v-text-field
-            v-model="item.tolerance"
+            v-model="item.gracePeriod"
             label="Tolerância:"
             prepend-icon="mdi-clock-time-four-outline"
             :rules="[
@@ -81,7 +81,6 @@
         </template>
         <span>Salvar</span>
       </v-tooltip>
-
     </div>
           <div>
         <v-icon @click="addrows()">mdi-plus</v-icon>
@@ -92,10 +91,13 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import { format } from 'date-fns';
+import axios from 'axios';
 
 export default {
   props: {
     id_dw: Array,
+    uniqueId: String,
   },
   components: {},
   data() {
@@ -106,11 +108,12 @@ export default {
         {
           to: null,
           from: null,
-          tolerance: null,
+          gracePeriod: null,
           price: null,
           weekDay: null,
         },
       ],
+      uniqueIdPrice: null,
       inp1: null,
       inp2: null,
       data: [],
@@ -121,6 +124,7 @@ export default {
   computed: {
     ...mapState({
       statusButton: (a) => a.addrotative.statusButton,
+      stateInfo: (a) => a.profile.info,
     }),
     reverse() {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
@@ -130,38 +134,50 @@ export default {
   methods: {
     log() {
       // this.setButton(false);
-      console.log(this.statusButton);
+      console.log(this.stateInfo);
     },
     ...mapActions(['setPrice', 'setButton']),
     addPrice() {
       // eslint-disable-next-line no-unused-expressions
       // this.setPrice(this.data);
-      console.log('add > ', this.data);
+      // console.log('add > ', this.data);
       this.data.push();
     },
     add(data, index) {
       if (this.$refs.form[index].validate()) {
+        // this.uniqueIdPrice = this.setUniqueId();
+
         this.items.push({
           type: this.type,
           to: null,
           from: null,
-          tolerance: null,
+          gracePeriod: null,
           price: null,
           weekDay: null,
+          companyId: null,
+          maxPriceValue: null,
+          uniqueIdPrice: null,
         });
         this.data.push({
           type: this.type,
-          to: data.to,
-          from: data.from,
-          tolerance: data.tolerance,
+          to: Number(data.to),
+          from: Number(data.from),
+          gracePeriod: Number(data.gracePeriod),
           price: Number(data.price),
           weekDay: this.convertDays(this.id_dw).join(', ').replaceAll(', ', '|'),
+          companyId: Number(localStorage.getItem('company')),
+          maxPriceValue: 10,
+          uniqueIdPrice: this.uniqueId,
+        });
+
+        axios.post(`/price/${this.stateInfo.companyId}`, this.data, {
+          headers: { Authorization: `Bearer ${this.stateInfo.token}` },
         });
         // eslint-disable-next-line no-unused-expressions
         this.setButton(false);
         // eslint-disable-next-line no-unused-expressions
         // this.setPrice(this.data);
-        // console.log('add>', this.data);
+        console.log('add>', this.data);
       }
     },
     save(data, index) {
@@ -169,9 +185,12 @@ export default {
         this.data.push({
           to: data.to,
           from: data.from,
-          tolerance: data.tolerance,
+          gracePeriod: data.gracePeriod,
           price: parseInt(data.price, 2),
           weekDay: this.convertDays(this.id_dw).join(', '),
+          companyId: localStorage.getItem('company'),
+          maxPriceValue: 10,
+          uniqueIdPrice: this.uniqueId,
         });
         // eslint-disable-next-line no-unused-expressions
         this.setButton(false);
@@ -188,14 +207,20 @@ export default {
       this.items.push({
         to: null,
         from: null,
-        tolerance: null,
+        gracePeriod: null,
         price: null,
         weekDay: null,
+        companyId: null,
+        maxPriceValue: null,
+        uniqueIdPrice: this.uniqueIdPrice,
       });
     },
     convertDays(data) {
       const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
       return data.map((res) => days[res] || '');
+    },
+    setUniqueId() {
+      return format(new Date(), 'HHmmssSSS');
     },
   },
 };

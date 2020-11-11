@@ -7,6 +7,7 @@ const token = localStorage.getItem('token');
 export default {
   state: {
     items: [],
+    info: { companyId, token },
   },
   actions: {
     async getProfile({ commit }) {
