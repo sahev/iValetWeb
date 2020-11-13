@@ -47,10 +47,11 @@
           >
             <v-list-item-content>
               <v-list-item-title
-
-                class="mx-auto"
+                class="text-left align-self-start"
+                style="margin-left: 11vh"
                 v-text="child.name"
-              ></v-list-item-title>
+              >
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>

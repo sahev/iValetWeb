@@ -1,57 +1,64 @@
 <template>
-  <v-col
-    cols="8"
-    sm="11"
-    offset-lx="2"
-  >
-      <v-list>
-        <template v-for="(price, i) in prices">
-          <v-list-item
-            v-if="price.weekDay"
-            :key="i"
+  <div>
+    <v-expand-transition>
+    <v-list v-show="!pricedetails">
+      <template v-for="(price, i) in prices">
+        <v-list-item v-if="price.weekDay" :key="i" link>
+          <v-list-item-content
+            @click="getPriceDetails(price.uniqueIdPrice), (pricedetails = true)"
           >
-          <v-list-item-icon>
-              {{ i + 1 }}
-              </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-subtitle>{{ split(price.weekDay) }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-divider
-            :key="price.id"
-            inset
-          ></v-divider>
-        </template>
-      </v-list>
-  </v-col>
+            <div>
+              <v-card-title>
+                {{ split(price.weekDay) }}
+              </v-card-title>
+              <v-card-subtitle class="text-left align-self-start">
+                {{
+                  price.type == 1
+                    ? "Fixo"
+                    : price.type == 2
+                    ? "Dinâmico"
+                    : price.type
+                }}
+              </v-card-subtitle>
+            </div>
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider v-if="price" :key="`divider-${i}`"> </v-divider>
+      </template>
+    </v-list>
+    </v-expand-transition>
+    <v-expand-transition>
+      <ShowDetails v-show="pricedetails" />
+    </v-expand-transition>
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          fab
+          bottom
+          left
+          absolute
+          @click="pricedetails = !pricedetails"
+          v-bind="attrs"
+          v-on="on"
+          v-show="pricedetails"
+        >
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </template>
+      <span>Voltar</span>
+    </v-tooltip>
+  </div>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex';
+import ShowDetails from './ShowDetails.vue';
 
 export default {
+  components: {
+    ShowDetails,
+  },
   data: () => ({
-    inset: true,
-    items: [
-      {
-        action: 'mdi-label',
-        title: 'List item 1',
-      },
-      {
-        divider: true,
-      },
-      {
-        action: 'mdi-label',
-        title: 'List item 2',
-      },
-      {
-        divider: true,
-      },
-      {
-        action: 'mdi-label',
-        title: 'List item 3',
-      },
-    ],
+    pricedetails: false,
   }),
   async mounted() {
     this.getPrices();
@@ -59,15 +66,17 @@ export default {
   computed: {
     ...mapState({
       prices: (a) => a.prices.items,
+      details: (a) => a.prices.details,
     }),
   },
   methods: {
-    ...mapActions(['getPrices']),
-    setTitle() {
-      console.log('title>', this.prices.lenght);
+    ...mapActions(['getPrices', 'getPriceDetails']),
+    log() {
+      console.log('prices>', this.prices, 'details>', this.details);
+      // console.log(data);
     },
     split(data) {
-      return data.replace('|', ', ');
+      return data.replaceAll('|', ' | ');
     },
   },
 };
